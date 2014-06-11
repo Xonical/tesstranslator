@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>493</width>
-    <height>234</height>
+    <width>629</width>
+    <height>327</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,13 +19,16 @@
   <widget class="QWidget" name="gridLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>0</y>
-     <width>391</width>
+     <x>100</x>
+     <y>50</y>
+     <width>381</width>
      <height>191</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetNoConstraint</enum>
+    </property>
     <property name="spacing">
      <number>0</number>
     </property>

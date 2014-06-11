@@ -1,12 +1,18 @@
 #include "widget.h"
 #include "ui_widget.h"
 
+
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
+    ui->lblLeft->setCentralQLabel(ui->lblCenter);
+
+
      
+    //qDebug() << "!!! " << My::getCentralLabel().objectName();
+
     //setWindowFlags(Qt::FramelessWindowHint|Qt::WindowStaysOnTopHint);
     //setWindowFlags(Qt::Widget | Qt::FramelessWindowHint);
     setParent(0); // Create TopLevel-Widget

@@ -15,8 +15,12 @@ public:
     void mouseMoveEvent(QMouseEvent *ev);
     void mousePressEvent(QMouseEvent *ev);
     void leaveEvent(QEvent *ev);
+    void setCentralQLabel(QLabel *label);
 
     int x,y;
+
+private:
+    QLabel *centralQLabel;
 
 signals:
     void Mouse_Pressed();

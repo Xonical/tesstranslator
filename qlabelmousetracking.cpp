@@ -39,6 +39,22 @@ void QLabelMouseTracking::mouseMoveEvent(QMouseEvent *ev)
 
 
 
+    if(ev->buttons() == Qt::LeftButton &&
+            this->objectName() == "lblLeft"
+
+    ){
+//qDebug() << "x " + QString::number(ev->x()) + " y " + QString::number(ev->y());
+QRect rect =  this->geometry();
+//Master
+        this->move(ev->x(),0);
+        //this->setGeometry(rect.x() + ev->x(),rect.y(),rect.width(),rect.height());
+        qDebug() << "x " + QString::number(rect.x() + ev->x()) + " y " + QString::number(rect.y());
+    }
+
+
+
+
+
     QPoint point2;
     QPoint point = this->mapToGlobal(point2);
     //qDebug() << "x " + QString::number(point.x()) + " y " + QString::number(point.y());
@@ -51,7 +67,7 @@ void QLabelMouseTracking::mouseMoveEvent(QMouseEvent *ev)
 
 
 
-    qDebug() << this->objectName();
+
 }
 
 void QLabelMouseTracking::mousePressEvent(QMouseEvent *ev)
@@ -65,5 +81,10 @@ void QLabelMouseTracking::leaveEvent(QEvent *ev)
         this->setStyleSheet("background-color: rgba(255, 235, 205, 0.7)");
     }
 
-     emit Mouse_Left();
+    emit Mouse_Left();
+}
+
+void QLabelMouseTracking::setCentralQLabel(QLabel *label)
+{
+    this->centralQLabel= label;
 }
