@@ -13,6 +13,35 @@ QLabelMouseTracking::QLabelMouseTracking(QWidget *parent) :
 
 void QLabelMouseTracking::mouseMoveEvent(QMouseEvent *ev)
 {
+    /*
+    int x = 0; int y =0; int width = 1280; int height = 1024;
+    bool toZoom = true;
+    while(toZoom){
+
+               if(x!= 512){
+                   x++;
+               }
+               if(y= 20){
+                   y++;
+               }
+
+               if(width!= 629){
+                   width--;
+               }
+               if(height != 327){
+                   height--;
+               }
+              this->setGeometry(x,y,width,height);
+               if(x==512 && y == 20 &&
+                  width == 629 && height == 327){
+                   toZoom =false;
+               }
+    }
+*/
+
+
+
+
     this->x = ev->x();
     this->y = ev->y();
 
@@ -131,7 +160,7 @@ void QLabelMouseTracking::expandToLeft(QMouseEvent *ev, QLabel *label)
 
     int newWeight = 0;
     // The user expand to left, not to the right
-    if(ev->globalX() < this->rightBorderX - mainWidget->geometry().width()){
+    //if(ev->globalX() < this->rightBorderX - mainWidget->geometry().width()){
         //int growRight = (ev->globalX() - this->oldGlobalPos.x()) *-1;
         qDebug() << "GR: " ;
 
@@ -152,7 +181,7 @@ void QLabelMouseTracking::expandToLeft(QMouseEvent *ev, QLabel *label)
 
 
         mainWidget->setGeometry(ev->globalX(),y,newSize,height);
-    }
+    //}
     this->oldGlobalPos = ev->globalPos();
 
 

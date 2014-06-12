@@ -17,6 +17,9 @@ public:
 
 private:
     Ui::Widget *ui;
+
+public slots:
+    void doLater();
 };
 
 #endif // WIDGET_H
