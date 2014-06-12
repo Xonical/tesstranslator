@@ -6,6 +6,7 @@
 #include <QMouseEvent>
 #include <QEvent>
 #include <QDebug>
+#include <QPoint>
 
 class QLabelMouseTracking : public QLabel
 {
@@ -16,11 +17,18 @@ public:
     void mousePressEvent(QMouseEvent *ev);
     void leaveEvent(QEvent *ev);
     void setCentralQLabel(QLabel *label);
+    void expandToLeft(QMouseEvent *ev, QLabel *label);
+
 
     int x,y;
 
 private:
     QLabel *centralQLabel;
+
+    //used to calculate the resize at mouse move event
+    QPoint buttonPressedGlobalPos;
+    QPoint oldGlobalPos;
+    int rightBorderX;
 
 signals:
     void Mouse_Pressed();

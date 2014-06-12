@@ -8,17 +8,17 @@ Widget::Widget(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->lblLeft->setCentralQLabel(ui->lblCenter);
-
+    ui->horizontalLayout->setContentsMargins(0,0,0,0);
 
      
     //qDebug() << "!!! " << My::getCentralLabel().objectName();
 
-    //setWindowFlags(Qt::FramelessWindowHint|Qt::WindowStaysOnTopHint);
-    //setWindowFlags(Qt::Widget | Qt::FramelessWindowHint);
+    setWindowFlags(Qt::FramelessWindowHint|Qt::WindowStaysOnTopHint);
+    setWindowFlags(Qt::Widget | Qt::FramelessWindowHint);
     setParent(0); // Create TopLevel-Widget
-    //setAttribute(Qt::WA_NoSystemBackground, true);
-    //setAttribute(Qt::WA_TranslucentBackground, true);
-    //setAttribute(Qt::WA_PaintOnScreen); // as pointed by Caveman (thanks!)
+    setAttribute(Qt::WA_NoSystemBackground, true);
+    setAttribute(Qt::WA_TranslucentBackground, true);
+    setAttribute(Qt::WA_PaintOnScreen); // as pointed by Caveman (thanks!)
 
 
     ui->lblBottom->setStyleSheet("background-color: rgba(255, 235, 205, 0.7)");
@@ -32,6 +32,9 @@ Widget::Widget(QWidget *parent) :
     ui->lblTopRight->setStyleSheet("background-color: rgba(255, 235, 205, 0.7)");
 
 
+
+
+    this->move(512,20);
 }
 
 Widget::~Widget()
