@@ -15,11 +15,14 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         widget.cpp \
-    qlabelmousetracking.cpp
+    qlabelmousetracking.cpp \
+    actionform.cpp
 
 HEADERS  += widget.h \
     myqlabelcenter.h \
     qlabelmousetracking.h \
-    myqlabelhandler.h
+    myqlabelhandler.h \
+    actionform.h
 
-FORMS    += widget.ui
+FORMS    += widget.ui \
+    actionform.ui

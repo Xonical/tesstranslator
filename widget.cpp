@@ -1,5 +1,6 @@
 #include "widget.h"
 #include "ui_widget.h"
+#include "actionform.h"
 #include <QTimer>
 
 
@@ -68,4 +69,13 @@ void Widget::doLater()
                    qDebug()<<"Finish 5";
                }
     }
+    this->initActionForm();
+}
+
+void Widget::initActionForm(){
+    ActionForm *form = new ActionForm();
+    form->show();
+    form->move(0,0);
+
+
 }

@@ -17,9 +17,11 @@ public:
     void mouseMoveEvent(QMouseEvent *ev);
     void mousePressEvent(QMouseEvent *ev);
     void leaveEvent(QEvent *ev);
+    void mouseDoubleClickEvent(QMouseEvent *ev);
     void setCentralQLabel(QLabel *label);
     void expandToLeft(QMouseEvent *ev, QLabel *label);
     void moveWidget(QMouseEvent *ev,QLabel *label);
+    void createCropedScreenshot(QMouseEvent *ev);
 
 
     int x,y;

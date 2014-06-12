@@ -4,6 +4,9 @@
 #include <QApplication>
 #include <QString>
 #include <QWidget>
+#include <QPixmap>
+#include <QScreen>
+#include <QDir>
 
 QLabelMouseTracking::QLabelMouseTracking(QWidget *parent) :
     QLabel(parent)
@@ -69,6 +72,13 @@ void QLabelMouseTracking::leaveEvent(QEvent *ev)
     emit Mouse_Left();
 }
 
+void QLabelMouseTracking::mouseDoubleClickEvent(QMouseEvent *ev)
+{
+       if (this->objectName() == "lblCenter"){
+           this->createCropedScreenshot(ev);
+       }
+}
+
 void QLabelMouseTracking::setCentralQLabel(QLabel *label)
 {
     this->centralQLabel= label;
@@ -107,4 +117,31 @@ void QLabelMouseTracking::moveWidget(QMouseEvent *ev, QLabel *label)
     QRect geo = mainWidget->geometry();
     mainWidget->move(geo.x() + ev->x() - this->mousePressedGlobalX,
                      geo.y() + ev->y() - this->mousePressedGlobalY);
+}
+
+void QLabelMouseTracking::createCropedScreenshot(QMouseEvent *ev)
+{
+    QWidget *mainWidget = this->parentWidget();
+    mainWidget->hide();
+
+    QPixmap pix =  QPixmap(); // clear image for low memory situations                            // on embedded devices.
+    pix = QPixmap::grabWindow(QApplication::desktop()->winId());
+
+    mainWidget->show();
+    QRect geo = mainWidget->geometry();
+    QPixmap pixCopy = pix.copy(geo.x(),geo.y(),geo.width(),geo.height());
+
+    QString format = "png";
+    //QString initialPath = QDir::currentPath() + tr("/untitled.") + format;
+    QString fileName = "d:/croppedImage." + format;
+
+//    QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
+//                               initialPath,
+//                               tr("%1 Files (*.%2);;All Files (*)")
+//                               .arg(format.toUpper())
+//                               .arg(format));
+
+      //QDir::tempPath();
+
+      pixCopy.save(fileName, format.toLatin1().constData());
 }

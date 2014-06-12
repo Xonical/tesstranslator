@@ -17,6 +17,7 @@ public:
 
 private:
     Ui::Widget *ui;
+    void initActionForm();
 
 public slots:
     void doLater();
