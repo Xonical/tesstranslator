@@ -15,9 +15,7 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         widget.cpp \
-    myqlabelcenter.cpp \
-    qlabelmousetracking.cpp \
-    myqlabelhandler.cpp
+    qlabelmousetracking.cpp
 
 HEADERS  += widget.h \
     myqlabelcenter.h \
