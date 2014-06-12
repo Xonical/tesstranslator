@@ -7,6 +7,7 @@
 #include <QEvent>
 #include <QDebug>
 #include <QPoint>
+#include <QRect>
 
 class QLabelMouseTracking : public QLabel
 {
@@ -18,6 +19,7 @@ public:
     void leaveEvent(QEvent *ev);
     void setCentralQLabel(QLabel *label);
     void expandToLeft(QMouseEvent *ev, QLabel *label);
+    void moveWidget(QMouseEvent *ev,QLabel *label);
 
 
     int x,y;
@@ -29,6 +31,8 @@ private:
     QPoint buttonPressedGlobalPos;
     QPoint oldGlobalPos;
     int rightBorderX;
+    int mousePressedGlobalX;
+    int mousePressedGlobalY;
 
 signals:
     void Mouse_Pressed();

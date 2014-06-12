@@ -13,31 +13,7 @@ QLabelMouseTracking::QLabelMouseTracking(QWidget *parent) :
 
 void QLabelMouseTracking::mouseMoveEvent(QMouseEvent *ev)
 {
-    /*
-    int x = 0; int y =0; int width = 1280; int height = 1024;
-    bool toZoom = true;
-    while(toZoom){
 
-               if(x!= 512){
-                   x++;
-               }
-               if(y= 20){
-                   y++;
-               }
-
-               if(width!= 629){
-                   width--;
-               }
-               if(height != 327){
-                   height--;
-               }
-              this->setGeometry(x,y,width,height);
-               if(x==512 && y == 20 &&
-                  width == 629 && height == 327){
-                   toZoom =false;
-               }
-    }
-*/
 
 
 
@@ -48,6 +24,9 @@ void QLabelMouseTracking::mouseMoveEvent(QMouseEvent *ev)
     //QString *curObj = this->objectName();
     if (this->objectName() == "lblCenter"){
         setCursor( Qt::OpenHandCursor);
+        if (ev->buttons() == Qt::LeftButton ){
+            this->moveWidget(ev,this);
+        }
     }else if(this->objectName() == "lblLeft"){
         setCursor( Qt::SizeHorCursor );
         if (ev->buttons() == Qt::LeftButton ){
@@ -109,15 +88,21 @@ void QLabelMouseTracking::mousePressEvent(QMouseEvent *ev)
     //the Global-X Position add the width and subtract the position
     // that was mapped from the border to the parent
     rightBorderX  = ev->globalX() + mainWidget->geometry().width() -ev->x();
-    qDebug() << "aa-Def: " << this->rightBorderX;
+    //qDebug() << "aa-Def: " << this->rightBorderX;
+
+
+    mousePressedGlobalX = ev->pos().x();
+    mousePressedGlobalY = ev->pos().y();
+
+
 
 
     //QPoint temp(topRight,0);
     //buttonPressedGlobalPos = ev->globalPos();
-    this->oldGlobalPos = ev->globalPos();
-    int oldX = this->oldGlobalPos.x();
-    oldX -6;
-    this->oldGlobalPos.setX(oldX);
+    //this->oldGlobalPos = ev->globalPos();
+    //int oldX = this->oldGlobalPos.x();
+    //oldX -6;
+    //this->oldGlobalPos.setX(oldX);
     emit Mouse_Pressed();
 }
 
@@ -179,8 +164,13 @@ void QLabelMouseTracking::expandToLeft(QMouseEvent *ev, QLabel *label)
         qDebug() << "newSize: " << newSize;
         //newWeight = mainWidget->geometry().width() + growRight;
 
+        if(newSize < 20){
+            newSize = 20;
+        }else{
+            mainWidget->setGeometry(ev->globalX(),y,newSize,height);
+        }
 
-        mainWidget->setGeometry(ev->globalX(),y,newSize,height);
+        //int oldGlobalX = ev->globalX();
     //}
     this->oldGlobalPos = ev->globalPos();
 
@@ -201,5 +191,33 @@ void QLabelMouseTracking::expandToLeft(QMouseEvent *ev, QLabel *label)
 
 
       */
+
+}
+
+void QLabelMouseTracking::moveWidget(QMouseEvent *ev, QLabel *label)
+{
+    QWidget *mainWidget = label->parentWidget();
+    QPoint globalPoint = label->mapToGlobal( ev->globalPos() );
+    int x = globalPoint.x() + ev->x();
+    int y = globalPoint.y() + ev->y();
+    qDebug() << "xy: " << x << " "<< y;
+    qDebug() << "!! "<<  globalPoint;
+    qDebug() << "ev->x(); ev->y(); "<< ev->x() << " " << ev->y();;
+
+
+    //QRect geo = mainWidget->geometry();
+    //qDebug() << "new x" << this->geometryAtPress.x() +  ev->x();
+    //mainWidget->move((this->geometryAtPress.x() +  ev->x()) +8,
+      //               this->geometryAtPress.y() + ev->y());
+    //qDebug() << "expand to left: x: " <<globalPoint.x()<< " y: " << globalPoint.y();
+    //mainWidget->move(globalPoint.x(),globalPoint.y());
+
+    QRect geo = mainWidget->geometry();
+
+
+    //qDebug() << "new x" << this->geometryAtPress.x() +  event->x();
+       mainWidget->move(/*this->geometryAtPress.x() + */ geo.x() + ev->x() - this->mousePressedGlobalX,
+                  /*this->geometryAtPress.y() +*/  geo.y() + ev->y() - this->mousePressedGlobalY );
+
 
 }
