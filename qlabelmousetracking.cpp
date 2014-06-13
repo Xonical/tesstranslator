@@ -141,57 +141,31 @@ void QLabelMouseTracking::createCropedScreenshot(QMouseEvent *ev)
     QPixmap pixCopy = pix.copy(geo.x(),geo.y(),geo.width(),geo.height());
 
     QString format = "png";
-    //QString initialPath = QDir::currentPath() + tr("/untitled.") + format;
-    //QString fileName = "d:/croppedImage." + format;
-
-//    QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
-//                               initialPath,
-//                               tr("%1 Files (*.%2);;All Files (*)")
-//                               .arg(format.toUpper())
-//                               .arg(format));
-
-      //QDir::tempPath();
-    QString path = "d:/MyQT_Project";
+    QString pathPix = "d:/MyQT_Project";
     QString fileName;
     fileName = (QString::number(QDateTime::currentDateTime().toTime_t()));
 
-    //QThread *t = new QThread(mainWidget);
-    //pixCopy.save(path+ "/" + fileName+".png", format.toLatin1().constData());
-
-
-    //t->msleep(4000);
+    pixCopy.save(pathPix+ "/" + fileName+".png", format.toLatin1().constData());
 
 
     QProcess *process = new QProcess(this);
-     //tesseract  croppedImage.png test2.txt -eng
 
-    fileName = "1402617176";
-    QString foo = "d:\\MyQT_Project\\tesseract.exe " + fileName +".png "
-            +fileName+" -eng";
+    // Example %Path% + tesseract.exe  croppedImage.png test2 -eng
+    // I used the escaped backslash, because slash didn't work
 
-    QString bar = "d:\\MyQT_Project\\" + fileName +".png";
+    QString  foo = "\"d:\\MyQT_Project\\"; // The string contains spaces, that the reason für double qoutes
+    foo.append("tesseract.exe");
+    QString path = " d:\\MyQT_Project\\";
+    foo.append(path);
+    foo.append(fileName);
+    foo.append(".png");
+    foo.append(path);
+    foo.append(fileName); // The output file gets automatic a txt-Extension
+    foo.append(" -eng\"");
 
-
-    qDebug()<< QFile::exists("d:\\MyQT_Project\\tesseract.exe");
-    qDebug()<< "1: " << QFile::exists(bar);
-
-    while(false){
-        if(QFile::exists(bar)){
-          qDebug()<< "2: " << QFile::exists(bar);
-                break;
-        }
-    }
-    qDebug()<< "3: " << QFile::exists(bar);
-
-    //t->msleep(40000);
-
-    //Works
-    //process->start("d:\\MyQT_Project\\msiexec.exe");
-
-    foo = """d:\\MyQT_Project\\tesseract.exe  d:\\MyQT_Project\\1402617176.png d:\\MyQT_Project\\1402617176 -eng""";
+    //foo = """d:\\MyQT_Project\\tesseract.exe  d:\\MyQT_Project\\1402617176.png d:\\MyQT_Project\\1402617176 -eng""";
     qDebug()<< foo;
-    process->start(foo);
-
+    process->start("cmd /k" + foo);
 }
 
 void QLabelMouseTracking::expandToBottom(QMouseEvent *ev)
