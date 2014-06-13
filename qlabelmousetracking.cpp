@@ -7,6 +7,11 @@
 #include <QPixmap>
 #include <QScreen>
 #include <QDir>
+#include <QProcess>
+#include <QTemporaryFile>
+#include <QDateTime>
+#include <QThread>
+#include <QFile>
 
 QLabelMouseTracking::QLabelMouseTracking(QWidget *parent) :
     QLabel(parent)
@@ -34,6 +39,10 @@ void QLabelMouseTracking::mouseMoveEvent(QMouseEvent *ev)
         setCursor( Qt::SizeVerCursor );
     }else if(this->objectName() == "lblBottom"){
         setCursor( Qt::SizeVerCursor );
+
+        if (ev->buttons() == Qt::LeftButton ){
+            this->expandToBottom(ev);
+        }
     }else if(this->objectName() == "lblTopLeft"){
         setCursor( Qt::SizeFDiagCursor );
     }else if(this->objectName() == "lblTopRight"){
@@ -133,7 +142,7 @@ void QLabelMouseTracking::createCropedScreenshot(QMouseEvent *ev)
 
     QString format = "png";
     //QString initialPath = QDir::currentPath() + tr("/untitled.") + format;
-    QString fileName = "d:/croppedImage." + format;
+    //QString fileName = "d:/croppedImage." + format;
 
 //    QString fileName = QFileDialog::getSaveFileName(this, tr("Save As"),
 //                               initialPath,
@@ -142,6 +151,52 @@ void QLabelMouseTracking::createCropedScreenshot(QMouseEvent *ev)
 //                               .arg(format));
 
       //QDir::tempPath();
+    QString path = "d:/MyQT_Project";
+    QString fileName;
+    fileName = (QString::number(QDateTime::currentDateTime().toTime_t()));
 
-      pixCopy.save(fileName, format.toLatin1().constData());
+    //QThread *t = new QThread(mainWidget);
+    //pixCopy.save(path+ "/" + fileName+".png", format.toLatin1().constData());
+
+
+    //t->msleep(4000);
+
+
+    QProcess *process = new QProcess(this);
+     //tesseract  croppedImage.png test2.txt -eng
+
+    fileName = "1402617176";
+    QString foo = "d:\\MyQT_Project\\tesseract.exe " + fileName +".png "
+            +fileName+" -eng";
+
+    QString bar = "d:\\MyQT_Project\\" + fileName +".png";
+
+
+    qDebug()<< QFile::exists("d:\\MyQT_Project\\tesseract.exe");
+    qDebug()<< "1: " << QFile::exists(bar);
+
+    while(false){
+        if(QFile::exists(bar)){
+          qDebug()<< "2: " << QFile::exists(bar);
+                break;
+        }
+    }
+    qDebug()<< "3: " << QFile::exists(bar);
+
+    //t->msleep(40000);
+
+    //Works
+    //process->start("d:\\MyQT_Project\\msiexec.exe");
+
+    foo = """d:\\MyQT_Project\\tesseract.exe  d:\\MyQT_Project\\1402617176.png d:\\MyQT_Project\\1402617176 -eng""";
+    qDebug()<< foo;
+    process->start(foo);
+
+}
+
+void QLabelMouseTracking::expandToBottom(QMouseEvent *ev)
+{
+    QWidget *mainWidget = this->parentWidget();
+    QRect geo = mainWidget->geometry();
+    mainWidget->setGeometry(geo.x(),geo.y(),geo.width(),geo.height() + ev->y());
 }

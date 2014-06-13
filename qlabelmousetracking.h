@@ -22,6 +22,7 @@ public:
     void expandToLeft(QMouseEvent *ev, QLabel *label);
     void moveWidget(QMouseEvent *ev,QLabel *label);
     void createCropedScreenshot(QMouseEvent *ev);
+    void expandToBottom( QMouseEvent *ev);
 
 
     int x,y;
