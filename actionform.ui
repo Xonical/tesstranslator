@@ -6,18 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>77</width>
-    <height>300</height>
+    <width>803</width>
+    <height>634</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
     <widget class="QLabel" name="label">
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(255, 255, 0);</string>
+      <string notr="true">background-color: rgba(0, 85, 255,0.8);</string>
      </property>
      <property name="text">
       <string>TextLabel</string>

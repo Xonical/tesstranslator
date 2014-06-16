@@ -2,6 +2,9 @@
 #define ACTIONFORM_H
 
 #include <QWidget>
+#include <QTimer>
+#include <QDebug>
+#include <QWidgetList>
 
 namespace Ui {
 class ActionForm;
@@ -17,6 +20,9 @@ public:
 
 private:
     Ui::ActionForm *ui;
+
+public slots:
+    void doLater();
 };
 
 #endif // ACTIONFORM_H

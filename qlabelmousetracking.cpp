@@ -12,6 +12,7 @@
 #include <QDateTime>
 #include <QThread>
 #include <QFile>
+#include "translation.h"
 
 QLabelMouseTracking::QLabelMouseTracking(QWidget *parent) :
     QLabel(parent)
@@ -136,7 +137,7 @@ void QLabelMouseTracking::createCropedScreenshot(QMouseEvent *ev)
     QPixmap pix =  QPixmap(); // clear image for low memory situations                            // on embedded devices.
     pix = QPixmap::grabWindow(QApplication::desktop()->winId());
 
-    mainWidget->show();
+
     QRect geo = mainWidget->geometry();
     QPixmap pixCopy = pix.copy(geo.x(),geo.y(),geo.width(),geo.height());
 
@@ -148,14 +149,20 @@ void QLabelMouseTracking::createCropedScreenshot(QMouseEvent *ev)
     pixCopy.save(pathPix+ "/" + fileName+".png", format.toLatin1().constData());
 
 
-    QProcess *process = new QProcess(this);
+
 
     // Example %Path% + tesseract.exe  croppedImage.png test2 -eng
     // I used the escaped backslash, because slash didn't work
 
+//    QString  foo = "\"d:\\MyQT_Project\\"; // The string contains spaces, that the reason für double qoutes
+//    foo.append("tesseract.exe");
+//    QString path = " d:\\MyQT_Project\\";
+
     QString  foo = "\"d:\\MyQT_Project\\"; // The string contains spaces, that the reason für double qoutes
     foo.append("tesseract.exe");
-    QString path = " d:\\MyQT_Project\\";
+    QString path = "d:\\MyQT_Project\\";
+
+
     foo.append(path);
     foo.append(fileName);
     foo.append(".png");
@@ -165,7 +172,72 @@ void QLabelMouseTracking::createCropedScreenshot(QMouseEvent *ev)
 
     //foo = """d:\\MyQT_Project\\tesseract.exe  d:\\MyQT_Project\\1402617176.png d:\\MyQT_Project\\1402617176 -eng""";
     qDebug()<< foo;
-    process->start("cmd /k" + foo);
+    //process->start("cmd /k" + foo);
+    //process->waitForFinished();
+
+    QStringList args;
+    args.append(path + fileName + ".png");
+    args.append(path + fileName);
+    args.append("-eng");
+
+//    args.append(path + fileName + ".png");
+//    args.append(path + fileName);
+//    args.append(" -eng\"");
+    qDebug()<< "QStringList" << args;
+QProcess *process = new QProcess(this);
+
+
+
+
+//    qDebug()<< "!!: " << process->isReadable();
+//    qDebug()<< "??: " << process->isWritable();
+    process->start("d:\\MyQT_Project\\tesseract.exe",args,QIODevice::ReadOnly);
+
+    process->waitForFinished();
+
+    QString txtFile = pathPix+ "/" + fileName+".txt";
+    qDebug() << "Read txt: " << txtFile;
+
+
+    //QThread *thread = new QThread(this);
+
+//    while(true){
+//        qDebug() << "READ";
+//        if(file.exists(txtFile))break;
+//        thread->sleep(1000);
+//    }
+    //thread->sleep(1000);
+   // process->close();
+
+
+QFile file(txtFile);
+
+    QString doc;
+    if(file.open(QIODevice::ReadOnly | QIODevice::Text)){
+
+        QString line;
+        QTextStream stream(&file);
+
+        do{
+            line = stream.readLine();
+            doc += line;
+            qDebug() << "Line " <<line;
+        }while(! line.isNull());
+
+
+        //The reason for no loop is, that the translation is in one line
+
+    }
+    file.close();
+    qDebug() << "Was steht: " << doc;
+    mainWidget->show();
+
+    Translation *tWid = new Translation();
+    tWid->show();
+    //https://translate.google.de/#en/de/eaten
+    tWid->setUrl("https://translate.google.de/#en/de/" +doc);
+
+
 }
 
 void QLabelMouseTracking::expandToBottom(QMouseEvent *ev)

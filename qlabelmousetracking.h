@@ -8,6 +8,10 @@
 #include <QDebug>
 #include <QPoint>
 #include <QRect>
+#include <QIODevice>
+#include<QTextStream>
+#include<QFile>
+#include<QThread>
 
 class QLabelMouseTracking : public QLabel
 {

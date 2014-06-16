@@ -29,7 +29,7 @@ ui->setupUi(this);
     ui->lblTopLeft->setStyleSheet("background-color: rgba(255, 235, 205, 0.7)");
     ui->lblTopRight->setStyleSheet("background-color: rgba(255, 235, 205, 0.7)");
 
-    int x = 0; int y =0; int width = 1280; int height = 1024;
+    int x = -1600; int y =0; int width = 1280; int height = 1024;
     this->setGeometry(x,y,width,height);
 
     QTimer::singleShot(1000, this, SLOT(doLater()));

@@ -4,8 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui sql
 QT       += widgets
+QT       += webkitwidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -16,13 +17,16 @@ TEMPLATE = app
 SOURCES += main.cpp\
         widget.cpp \
     qlabelmousetracking.cpp \
-    actionform.cpp
+    actionform.cpp \
+    translation.cpp
 
 HEADERS  += widget.h \
     myqlabelcenter.h \
     qlabelmousetracking.h \
     myqlabelhandler.h \
-    actionform.h
+    actionform.h \
+    translation.h
 
 FORMS    += widget.ui \
-    actionform.ui
+    actionform.ui \
+    translation.ui
