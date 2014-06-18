@@ -235,9 +235,9 @@ QFile file(txtFile);
     Translation *tWid = new Translation();
     tWid->show();
     //https://translate.google.de/#en/de/eaten
-    tWid->setUrl("https://translate.google.de/#en/de/" +doc);
+    tWid->setTextToTranslate("https://translate.google.de/#en/de/" +doc);
 
-
+//http://dict.leo.org/ende/index_de.html#/search=cinema&searchLoc=0&resultOrder=basic&multiwordShowSingle=on
 }
 
 void QLabelMouseTracking::expandToBottom(QMouseEvent *ev)

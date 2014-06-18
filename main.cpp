@@ -18,10 +18,12 @@ int main(int argc, char *argv[])
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    a.setStyleSheet("QSplitter::handle { background-color: yellow }");
     Translation w;
-    //w.setUrl("https://translate.google.de/#en/de/eaten");
-    w.show();
 
+    w.show();
+    //w.setUrl("https://translate.google.de/#en/de/eaten");
+    w.setTextToTranslate("eaten");
     return a.exec();
 }
 

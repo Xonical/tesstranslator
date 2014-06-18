@@ -8,6 +8,7 @@ QT       += core gui sql
 QT       += widgets
 QT       += webkitwidgets
 
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = MyWidget
@@ -18,14 +19,16 @@ SOURCES += main.cpp\
         widget.cpp \
     qlabelmousetracking.cpp \
     actionform.cpp \
-    translation.cpp
+    translation.cpp \
+    bookdelegate.cpp
 
 HEADERS  += widget.h \
     myqlabelcenter.h \
     qlabelmousetracking.h \
     myqlabelhandler.h \
     actionform.h \
-    translation.h
+    translation.h \
+    bookdelegate.h
 
 FORMS    += widget.ui \
     actionform.ui \
