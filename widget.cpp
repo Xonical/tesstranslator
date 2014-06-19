@@ -77,9 +77,9 @@ void Widget::initActionForm(){
     //form->show();
     //form->move(0,0);
 
-    QSystemTrayIcon *tray = new QSystemTrayIcon(this);
-    //QIcon *icon = new QIcon("d:/MyQT_Project/app.ico");
-    QIcon icon =QIcon("d:/MyQT_Project/app.ico");
-    tray->setIcon(icon);
-    tray->setVisible(true);
+//    QSystemTrayIcon *tray = new QSystemTrayIcon(this);
+//    //QIcon *icon = new QIcon("d:/MyQT_Project/app.ico");
+//    QIcon icon =QIcon("d:/MyQT_Project/app.ico");
+//    tray->setIcon(icon);
+//    tray->setVisible(true);
 }

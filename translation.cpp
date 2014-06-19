@@ -10,9 +10,10 @@ Translation::Translation(QWidget *parent) :
     bool isInit = this->initDB();
     if(isInit){
         this->createModel();
-        ui->tableView->setItemDelegate(new BookDelegate(ui->tableView));
-        ui->tableView->setColumnHidden(model->fieldIndex("eng_ger_id"), true);
-        ui->tableView->setModel(model);
+
+
+
+
         //        connect(ui.bookTable->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
         //                mapper, SLOT(setCurrentModelIndex(QModelIndex)));
         //        ui.bookTable->setCurrentIndex(model->index(0, 0));
@@ -141,9 +142,20 @@ void Translation::createModel()
     model = new QSqlRelationalTableModel(ui->tableView);
     model->setEditStrategy(QSqlTableModel::OnFieldChange);
     model->setTable("eng_ger");
+
     model->setHeaderData(model->fieldIndex("eng"), Qt::Horizontal, tr("Englisch"));
     model->setHeaderData(model->fieldIndex("ger"), Qt::Horizontal, tr("Deutsch"));
+    model->setHeaderData(model->fieldIndex("date"), Qt::Horizontal, tr("Zeitpunkt"));
+    model->setHeaderData(model->fieldIndex("link"), Qt::Horizontal, tr("Link"));
 
+    if (!model->select()) {
+        QMessageBox::critical(this, tr("Error"),
+                              model->lastError().text());
+    }
+
+
+
+    //ui->tableView->setItemDelegate(new BookDelegate(ui->tableView));
 
 
     // Remember the indexes of the columns
@@ -161,12 +173,10 @@ void Translation::createModel()
     //        model->setHeaderData(model->fieldIndex("year"), Qt::Horizontal, tr("Year"));
     //        model->setHeaderData(model->fieldIndex("rating"), Qt::Horizontal, tr("Rating"));
 
+    ui->tableView->setModel(model);
 
+ui->tableView->setColumnHidden(model->fieldIndex("eng_ger_id"), true);
 
-    if (!model->select()) {
-        QMessageBox::critical(this, tr("Error"),
-                              model->lastError().text());
-    }
 }
 
 
@@ -260,4 +270,31 @@ void Translation::messageClicked()
 void Translation::on_btnBallon_clicked()
 {
     showMessage();
+}
+
+void Translation::on_btnInsert_clicked()
+{
+    model->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    QSqlRecord record;
+    QSqlField f2("eng", QVariant::String);
+    QSqlField f3("ger", QVariant::String);
+    QSqlField f4("date", QVariant::String);
+    QSqlField f5("link", QVariant::String);
+    f2.setValue(QVariant("awesome"));
+    f3.setValue(QVariant("genial"));
+
+    QDateTime *dateTime = new QDateTime();
+
+
+    f4.setValue(QVariant(dateTime->currentDateTime().toString()));
+    f5.setValue(QVariant("http://www.google.de"));
+
+    record.append(f2);
+    record.append(f3);
+    record.append(f4);
+    record.append(f5);
+    //model->insertRecord(-1,record);
+    model->insertRecord(-1,record);
+    model->submitAll();
+    model->setEditStrategy(QSqlTableModel::OnFieldChange);
 }

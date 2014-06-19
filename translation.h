@@ -20,6 +20,8 @@
 #include <QMenu>
 #include <QDialog>
 #include <QCloseEvent>
+#include <QDate>
+#include <QDateTime>
 
 namespace Ui {
 class Translation;
@@ -46,6 +48,8 @@ private slots:
         void messageClicked();
 
     void on_btnBallon_clicked();
+
+    void on_btnInsert_clicked();
 
 private:
     Ui::Translation *ui;

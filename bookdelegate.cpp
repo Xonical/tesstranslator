@@ -16,19 +16,26 @@ void BookDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
 
 
 
-    if (index.column() == 2){
+    if (index.column() == 4){
         QStyleOptionButton sf;
            sf.rect=option.rect;
            sf.features=QStyleOptionButton::None;
 
 
            const QAbstractItemModel *model = index.model();
-           QString str = model->data(index, Qt::DisplayRole).toString();
 
-           sf.text=(str);
+
+           //Hole Feld "link" aus db
+           //QString str = model->data(index, Qt::DisplayRole).toString();
+
+
+
+
+
+           sf.text=("Foo");
            sf.state=QStyle::State_Enabled|QStyle::State_Raised;
-           QApplication::style()->drawControl(QStyle::CE_PushButton,&sf,painter);
-
+           //QApplication::style()->drawControl(QStyle::CE_PushButton,&sf,painter);
+          // QApplication::style()->drawControl(QStyle::CE_PushButton,&sf,painter);
     }
 
 
@@ -38,11 +45,16 @@ void BookDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
     qDebug() <<"painter" << painter;
 
 
-    //QPen pen = painter->pen();
+    QStyleOptionViewItemV3 opt = option;
+    opt.rect.adjust(0, 0, -1, -1); // since we draw the grid ourselves
+
+    QSqlRelationalDelegate::paint(painter, opt, index);
+    QPen pen = painter->pen();
 //    painter->setPen(option.palette.color(QPalette::Mid));
 //    painter->drawLine(option.rect.bottomLeft(), option.rect.bottomRight());
 //    painter->drawLine(option.rect.topRight(), option.rect.bottomRight());
-//    painter->setPen(pen);
+    painter->setPen(pen);
+
 /*
     if (index.column() != 7) {
         QStyleOptionViewItemV3 opt = option;
@@ -82,18 +94,42 @@ void BookDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
 QSize BookDelegate::sizeHint(const QStyleOptionViewItem &option,
                                  const QModelIndex &index) const
 {
-    /*
+ /*
     if (index.column() == 5)
         return QSize(5 * star.width(), star.height()) + QSize(1, 1);
-
-    return QSqlRelationalDelegate::sizeHint(option, index) + QSize(1, 1); // since we draw the grid ourselves
 */
+    return QSqlRelationalDelegate::sizeHint(option, index) + QSize(1, 1); // since we draw the grid ourselves
+
 }
 
 bool BookDelegate::editorEvent(QEvent *event, QAbstractItemModel *model,
                                const QStyleOptionViewItem &option,
                                const QModelIndex &index)
 {
+    if (index.column() != 4){
+        return QSqlRelationalDelegate::editorEvent(event, model, option, index);
+
+    }
+
+//    if (event->type() == QEvent::MouseButtonPress) {
+//        QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+
+
+
+
+
+
+//        //Wird nicht modifiziert
+//        qDebug() << "Klick: " <<  model->data(index, Qt::DisplayRole).toString();
+
+//        //Daten können hier überschieben werden
+//        //model->setData(index, QVariant("Link"));
+//        return false;
+
+//        //return false; //so that the selection can change
+//    }
+
+
     /*
     if (index.column() != 5)
         return QSqlRelationalDelegate::editorEvent(event, model, option, index);
@@ -126,13 +162,22 @@ bool BookDelegate::editorEvent(QEvent *event, QAbstractItemModel *model,
 QWidget *BookDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option,
                                     const QModelIndex &index) const
 {
+     // We don't want edit the link, just click
+     if (index.column() != 4){
+         return QSqlRelationalDelegate::createEditor(parent, option, index);
+     }else{
+
+         //return QSqlRelationalDelegate::createEditor(parent, option, index);
+     }
+
+
     //if (index.column() != 2)
-        return QSqlRelationalDelegate::createEditor(parent, option, index);
+
 
    //Bei Klick, dann Button
-    QPushButton *btn = new QPushButton(parent);
-    btn->setText("Google");
-    return btn;
+//    QPushButton *btn = new QPushButton(parent);
+//    btn->setText("Google");
+//    return btn;
 
     //if (index.column() != 3)
         //return QSqlRelationalDelegate::createEditor(parent, option, index);
