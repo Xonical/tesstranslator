@@ -7,6 +7,10 @@ Translation::Translation(QWidget *parent) :
     ui(new Ui::Translation)
 {
     ui->setupUi(this);
+
+   /*
+
+
     QNetworkProxy proxy;
     //proxy.setType(QNetworkProxy::DefaultProxy);
     proxy.setType(QNetworkProxy::Socks5Proxy);
@@ -44,15 +48,15 @@ Translation::Translation(QWidget *parent) :
         }
 
 
-        m_horiz_header= ui->tableView->horizontalHeader();
-        connect(m_horiz_header, SIGNAL(sectionClicked(int)), this, SLOT(on_sectionClicked(int)));
+        //m_horiz_header= ui->tableView->horizontalHeader();
+        //connect(m_horiz_header, SIGNAL(sectionClicked(int)), this, SLOT(on_sectionClicked(int)));
 
 
 
        // connect(ui->webView,SIGNAL())
-
+ ui->tableView->setItemDelegate(new BookDelegate(ui->tableView));
         ui->tableView->setModel(model);
-        //ui->tableView->setItemDelegate(new BookDelegate(ui->tableView));
+
 
         // Remember the indexes of the columns
         //authorIdx = model->fieldIndex("author");
@@ -104,6 +108,26 @@ Translation::Translation(QWidget *parent) :
 
 
 
+
+
+        QRect geoThis = this->geometry();
+        //point = this->mapToGlobal(QPoint( geoThis.x(),geoThis.y));
+        QRect geoWebView = ui->webView->geometry();
+
+
+        this->setGeometry(geoWebView.x()+555,geoWebView.y() +44,geoThis.x()-geoWebView.x(),
+                          geoThis.height());
+*/
+    createActions();
+        createTrayIcon();
+        connect(trayIcon, SIGNAL(messageClicked()), this, SLOT(messageClicked()));
+        connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
+                this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
+
+
+        //Funktioniert bei Klick, wenn finished
+        //qDebug() <<"HTML : " <<  ui->webView->page()->selectedHtml();
+         //qDebug() <<"TEXT : " <<  ui->webView->page()->selectedText();
 }
 
 Translation::~Translation()
@@ -115,19 +139,36 @@ void Translation::setTextToTranslate(QString source)
 {
     this->source = source;
     QString google = "https://translate.google.de/#en/de/";
-    //QString toTranslate = "Wow, you \"are\" so hungry;;;";
+
     ui->webView->setUrl(QUrl(google + source));
-
-
-
-
 }
 
-void Translation::on_pushButton_7_clicked()
+//void Translation::setVisible(bool visible)
+//{
+//    /*
+//    minimizeAction->setEnabled(visible);
+//    //maximizeAction->setEnabled(!isMaximized());
+//    restoreAction->setEnabled(isMaximized() || !visible);
+//    QDialog::setVisible(visible);
+//    */
+//    this->setVisible(true);
+//}
+
+void Translation::closeEvent(QCloseEvent *event)
 {
-
+    if (trayIcon->isVisible()) {
+        QMessageBox::information(this, tr("Systray"),
+                                 tr("The program will keep running in the "
+                                    "system tray. To terminate the program, "
+                                    "choose <b>Quit</b> in the context menu "
+                                    "of the system tray entry."));
+        hide();
+        event->ignore();
+    }
 }
 
+
+/*
 void Translation::on_sectionClicked(int index)
 {
 
@@ -139,7 +180,7 @@ void Translation::on_sectionClicked(int index)
     //QSortFilterProxyModel *proxyModel;
     //proxyModel->setSourceModel( model );
     //ui->tableView->setModel(proxyModel );
-}
+}*/
 
 void Translation::initDB()
 {
@@ -175,28 +216,49 @@ void Translation::initDB()
 
 }
 
-void Translation::on_pushButton_6_clicked(bool checked)
-{
-
-    if(checked){
-        //ui->tableView->show();
-        //QSize s;
-        //s.setHeight(0);
-        //s.setWidth(0);
-        //ui->horizontalLayout->maximumSize(new QSize(0,0));
-    }
-    else{
-        //ui->tableView->hide();
-
-    }
-}
-
 void Translation::showError(const QSqlError &err)
 {
     QMessageBox::critical(this, "Unable to initialize Database",
-                "Error initializing database: " + err.text());
+                          "Error initializing database: " + err.text());
 }
 
+void Translation::createTrayIcon()
+{
+    trayIconMenu = new QMenu(this);
+    trayIconMenu->addAction(minimizeAction);
+//    //trayIconMenu->addAction(maximizeAction);
+    trayIconMenu->addAction(restoreAction);
+    trayIconMenu->addSeparator();
+    trayIconMenu->addAction(quitAction);
+
+    trayIcon = new QSystemTrayIcon(this);
+    trayIcon->setContextMenu(trayIconMenu);
+
+    trayIcon->setVisible(true);
+    QIcon icon = QIcon("D:/MyQT_Project/TessTranslator/images/heart.png");
+    trayIcon->setIcon(icon);
+    setWindowIcon(icon);
+
+    trayIcon->setToolTip("Blaaa");
+}
+
+void Translation::createActions()
+{
+    minimizeAction = new QAction(tr("Mi&nimize"), this);
+    connect(minimizeAction, SIGNAL(triggered()), this, SLOT(hide()));
+
+    //maximizeAction = new QAction(tr("Ma&ximize"), this);
+    //connect(maximizeAction, SIGNAL(triggered()), this, SLOT(showMaximized()));
+
+    restoreAction = new QAction(tr("&Restore"), this);
+    connect(restoreAction, SIGNAL(triggered()), this, SLOT(showNormal()));
+
+    quitAction = new QAction(tr("&Quit"), this);
+    connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
+}
+
+
+/*
 void Translation::on_webView_loadFinished(bool arg1)
 {
     if(arg1){
@@ -223,18 +285,67 @@ void Translation::on_webView_loadFinished(bool arg1)
                 record.append(f3);
                 model->insertRecord(-1,record);
     }
+}*/
+
+
+
+
+void Translation::on_btnShowBrowser_clicked()
+{
+    qDebug() << "gg";
+    ui->webView->setVisible(true);
+
 }
 
-void Translation::on_pushButton_4_clicked()
+void Translation::on_btnDumm_clicked()
 {
-    qDebug() <<"HTML : " <<  ui->webView->page()->selectedHtml();
-     qDebug() <<"TEXT : " <<  ui->webView->page()->selectedText();
-
-
-
+    qDebug() << "no gg";
+        ui->webView->setVisible(false);
 }
 
-void Translation::on_tableView_doubleClicked(const QModelIndex &index)
+void Translation::on_webView_loadFinished(bool arg1)
 {
-    qDebug() << "dd: " << index;
+    /*
+    QWebElement e = ui->webView->page()
+            //->mainFrame()->findFirstElement("span class=\"gt-card-ttl-txt\" style=\"direction: ltr;\"");
+
+            // Ausgabe :eat
+            //->currentFrame()->findFirstElement("span.gt-card-ttl-txt");
+
+            ->currentFrame()->findFirstElement("span#result_box");
+
+            qDebug() << "e: " << e.toPlainText();
+
+
+
+
+            QSqlRecord record;
+            QSqlField f2("eng", QVariant::String);
+            QSqlField f3("ger", QVariant::String);
+            f2.setValue(QVariant(source));
+            f3.setValue(QVariant(e.toPlainText()));
+            record.append(f2);
+            record.append(f3);
+            model->insertRecord(-1,record);
+            */
+}
+
+void Translation::showMessage()
+{
+    QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::MessageIcon(0);
+    trayIcon->showMessage("Title", "Nachricht", icon,
+                          10 * 1000);
+}
+
+void Translation::messageClicked()
+{
+    QMessageBox::information(0, tr("Systray"),
+                             tr("Sorry, I already gave what help I could.\n"
+                                "Maybe you should try asking a human?"));
+}
+
+
+void Translation::on_btnBallon_clicked()
+{
+    showMessage();
 }

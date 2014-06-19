@@ -16,6 +16,10 @@
 #include <QSqlTableModel>
 #include <QHeaderView>
 #include <QSortFilterProxyModel>
+#include <QSystemTrayIcon>
+#include <QMenu>
+#include <QDialog>
+#include <QCloseEvent>
 
 namespace Ui {
 class Translation;
@@ -29,19 +33,19 @@ public:
     explicit Translation(QWidget *parent = 0);
     ~Translation();
     void setTextToTranslate(QString source);
+//    void setVisible(bool visible);
+
+protected:
+    void closeEvent(QCloseEvent *event);
 
 private slots:
-    void on_pushButton_7_clicked();
-
-    void on_sectionClicked(int index);
-
-    void on_pushButton_6_clicked(bool checked);
-
+    void on_btnShowBrowser_clicked();
+    void on_btnDumm_clicked();
     void on_webView_loadFinished(bool arg1);
+    void showMessage();
+        void messageClicked();
 
-    void on_pushButton_4_clicked();
-
-    void on_tableView_doubleClicked(const QModelIndex &index);
+    void on_btnBallon_clicked();
 
 private:
     Ui::Translation *ui;
@@ -51,6 +55,13 @@ private:
     void showError(const QSqlError &err);
     QString source;
     QHeaderView *m_horiz_header;
+    void createTrayIcon();
+    QSystemTrayIcon *trayIcon;
+    QAction *minimizeAction;
+    QAction *restoreAction;
+    QAction *quitAction;
+    QMenu *trayIconMenu;
+        void createActions();
 };
 
 #endif // TRANSLATION_H

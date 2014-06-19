@@ -12,15 +12,26 @@ BookDelegate::BookDelegate(QObject *parent)
 void BookDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
                            const QModelIndex &index) const
 {
+    //QPushButton *btn;
 
-/*
-    QStyleOptionButton sf;
-       sf.rect=option.rect;
-       sf.features=QStyleOptionButton::None;
-       sf.text=trUtf8("löschen");
-       sf.state=QStyle::State_Enabled|QStyle::State_Raised;
-       QApplication::style()->drawControl(QStyle::CE_PushButton,&sf,painter);
-*/
+
+
+    if (index.column() == 2){
+        QStyleOptionButton sf;
+           sf.rect=option.rect;
+           sf.features=QStyleOptionButton::None;
+
+
+           const QAbstractItemModel *model = index.model();
+           QString str = model->data(index, Qt::DisplayRole).toString();
+
+           sf.text=(str);
+           sf.state=QStyle::State_Enabled|QStyle::State_Raised;
+           QApplication::style()->drawControl(QStyle::CE_PushButton,&sf,painter);
+
+    }
+
+
     //Stern-Bewertung
     qDebug() << "QModelIndex" << index;
     qDebug() <<"QStyleOptionViewItem" << option;
@@ -58,7 +69,6 @@ void BookDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
             x += width;
         }
         drawFocus(painter, option, option.rect.adjusted(0, 0, -1, -1)); // since we draw the grid ourselves
-
     }
 
     QPen pen = painter->pen();
@@ -116,8 +126,16 @@ bool BookDelegate::editorEvent(QEvent *event, QAbstractItemModel *model,
 QWidget *BookDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option,
                                     const QModelIndex &index) const
 {
-    //if (index.column() != 3)
+    //if (index.column() != 2)
         return QSqlRelationalDelegate::createEditor(parent, option, index);
+
+   //Bei Klick, dann Button
+    QPushButton *btn = new QPushButton(parent);
+    btn->setText("Google");
+    return btn;
+
+    //if (index.column() != 3)
+        //return QSqlRelationalDelegate::createEditor(parent, option, index);
 
     // for editing the year, return a spinbox with a range from -1000 to 2100.
     //QSpinBox *sb = new QSpinBox(parent);

@@ -2,6 +2,8 @@
 #define WIDGET_H
 
 #include <QWidget>
+#include <QSystemTrayIcon>
+#include <QIcon>
 
 namespace Ui {
 class Widget;

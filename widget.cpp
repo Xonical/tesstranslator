@@ -73,9 +73,13 @@ void Widget::doLater()
 }
 
 void Widget::initActionForm(){
-    ActionForm *form = new ActionForm();
-    form->show();
-    form->move(0,0);
+    //ActionForm *form = new ActionForm();
+    //form->show();
+    //form->move(0,0);
 
-
+    QSystemTrayIcon *tray = new QSystemTrayIcon(this);
+    //QIcon *icon = new QIcon("d:/MyQT_Project/app.ico");
+    QIcon icon =QIcon("d:/MyQT_Project/app.ico");
+    tray->setIcon(icon);
+    tray->setVisible(true);
 }

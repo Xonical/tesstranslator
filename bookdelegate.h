@@ -27,6 +27,7 @@ public:
     QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,
                                         const QModelIndex &index) const;
 
+
 private:
     QPixmap star;
     QPushButton *btn;

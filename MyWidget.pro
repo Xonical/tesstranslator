@@ -33,3 +33,6 @@ HEADERS  += widget.h \
 FORMS    += widget.ui \
     actionform.ui \
     translation.ui
+
+RESOURCES += \
+    systray.qrc

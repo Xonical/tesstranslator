@@ -56,7 +56,9 @@ void QLabelMouseTracking::mouseMoveEvent(QMouseEvent *ev)
 
     // To add a hover effect to each border-label
     if (this->objectName() != "lblCenter"){
-        this->setStyleSheet("background-color: rgba(139, 169, 119, 0.7)");
+      //  this->setStyleSheet("background-color: rgba(139, 169, 119, 0.7)");
+this->setStyleSheet("background-color: rgba(022, 46, 111, 0.5)");
+
     }
 }
 
