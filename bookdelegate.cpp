@@ -15,12 +15,22 @@ void BookDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
 
     if (index.column() == 4) {
         QVariant value = index.model()->data(index, Qt::UserRole);
-//        if (!isSupportedType(value.type())) {
-//            QStyleOptionViewItem myOption = option;
-//            myOption.state &= ~QStyle::State_Enabled;
-//            QItemDelegate::paint(painter, myOption, index);
-            return;
-//        }
+
+
+                QStyleOptionButton sf;
+                   sf.rect=option.rect;
+                   sf.features=QStyleOptionButton::None;
+                   const QAbstractItemModel *model = index.model();
+                   //Hole Feld "link" aus db
+                   //QString str = model->data(index, Qt::DisplayRole).toString();
+                   sf.text=("Foo");
+                   sf.state=QStyle::State_Enabled|QStyle::State_Raised;
+                   QApplication::style()->drawControl(QStyle::CE_PushButton,&sf,painter);
+                   QApplication::style()->drawControl(QStyle::CE_PushButton,&sf,painter);
+
+
+
+        return;
     }
 
     QItemDelegate::paint(painter, option, index);
