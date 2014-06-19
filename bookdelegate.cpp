@@ -13,23 +13,35 @@ void BookDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
                            const QModelIndex &index) const
 {
 
-
-
-    if (index.column() == 4){
-        QStyleOptionButton sf;
-           sf.rect=option.rect;
-           sf.features=QStyleOptionButton::None;
-           const QAbstractItemModel *model = index.model();
-           //Hole Feld "link" aus db
-           //QString str = model->data(index, Qt::DisplayRole).toString();
-           sf.text=("Foo");
-           sf.state=QStyle::State_Enabled|QStyle::State_Raised;
-           QApplication::style()->drawControl(QStyle::CE_PushButton,&sf,painter);
-           QApplication::style()->drawControl(QStyle::CE_PushButton,&sf,painter);
-           //
-    }else{
-        QSqlRelationalDelegate::paint(painter, option, index);
+    if (index.column() == 4) {
+        QVariant value = index.model()->data(index, Qt::UserRole);
+//        if (!isSupportedType(value.type())) {
+//            QStyleOptionViewItem myOption = option;
+//            myOption.state &= ~QStyle::State_Enabled;
+//            QItemDelegate::paint(painter, myOption, index);
+            return;
+//        }
     }
+
+    QItemDelegate::paint(painter, option, index);
+
+
+
+//    if (index.column() == 4){
+//        QStyleOptionButton sf;
+//           sf.rect=option.rect;
+//           sf.features=QStyleOptionButton::None;
+//           const QAbstractItemModel *model = index.model();
+//           //Hole Feld "link" aus db
+//           //QString str = model->data(index, Qt::DisplayRole).toString();
+//           sf.text=("Foo");
+//           sf.state=QStyle::State_Enabled|QStyle::State_Raised;
+//           QApplication::style()->drawControl(QStyle::CE_PushButton,&sf,painter);
+//           QApplication::style()->drawControl(QStyle::CE_PushButton,&sf,painter);
+//           //
+//    }else{
+//        QSqlRelationalDelegate::paint(painter, option, index);
+//    }
 
 //    QStyleOptionViewItemV3 opt = option;
 //    opt.rect.adjust(0, 0, -1, -1); // since we draw the grid ourselves
@@ -108,9 +120,10 @@ bool BookDelegate::editorEvent(QEvent *event, QAbstractItemModel *model,
 //            model->setData(index, QVariant(stars));
 //            return false; //so that the selection can change
 //        }
-
+        return false;
     }else{
-         return QSqlRelationalDelegate::editorEvent(event, model, option, index);
+        return true;
+        // return QSqlRelationalDelegate::editorEvent(event, model, option, index);
     }
 
 
@@ -132,10 +145,10 @@ QWidget *BookDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem 
 
      }else{
          //return QSqlRelationalDelegate::createEditor(parent, option, index);
-         return 0;
-         //return QSqlRelationalDelegate::createEditor(parent, option, index);
-     }
+         //return 0;
 
+     }
+ return QSqlRelationalDelegate::createEditor(parent, option, index);
 
     //if (index.column() != 2)
 
