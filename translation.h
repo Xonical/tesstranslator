@@ -33,7 +33,7 @@ public:
     explicit Translation(QWidget *parent = 0);
     ~Translation();
     void setTextToTranslate(QString source);
-//    void setVisible(bool visible);
+    void setVisible(bool visible);
 
 protected:
     void closeEvent(QCloseEvent *event);
@@ -50,7 +50,7 @@ private slots:
 private:
     Ui::Translation *ui;
     QSqlDatabase db;
-    void initDB();
+    bool initDB();
     QSqlRelationalTableModel *model;
     void showError(const QSqlError &err);
     QString source;
@@ -62,6 +62,7 @@ private:
     QAction *quitAction;
     QMenu *trayIconMenu;
         void createActions();
+        void createModel();
 };
 
 #endif // TRANSLATION_H
