@@ -155,7 +155,7 @@ void Translation::createModel()
 
 
 
-    //ui->tableView->setItemDelegate(new BookDelegate(ui->tableView));
+
 
 
     // Remember the indexes of the columns
@@ -174,6 +174,7 @@ void Translation::createModel()
     //        model->setHeaderData(model->fieldIndex("rating"), Qt::Horizontal, tr("Rating"));
 
     ui->tableView->setModel(model);
+    ui->tableView->setItemDelegate(new BookDelegate(ui->tableView));
 
 ui->tableView->setColumnHidden(model->fieldIndex("eng_ger_id"), true);
 
