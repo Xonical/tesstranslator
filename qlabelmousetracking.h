@@ -13,7 +13,7 @@
 #include<QFile>
 #include<QThread>
 #include <QPointer>
-#include "translatator.h"
+#include "translator.h"
 
 class QLabelMouseTracking : public QLabel
 {

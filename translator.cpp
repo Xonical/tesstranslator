@@ -1,5 +1,5 @@
-#include "translatator.h"
-#include "ui_translation.h"
+#include "translator.h"
+#include "ui_translator.h"
 #include "bookdelegate.h"
 #include "imagecrop.h"
 #include "trainer.h"

@@ -12,7 +12,7 @@
 #include <QDateTime>
 #include <QThread>
 #include <QFile>
-#include "translatator.h"
+#include "translator.h"
 #include "imagecrop.h"
 
 QLabelMouseTracking::QLabelMouseTracking(QWidget *parent) :

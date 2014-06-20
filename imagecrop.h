@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QSystemTrayIcon>
 #include <QIcon>
-#include <translatator.h>
+#include <translator.h>
 
 namespace Ui {
 class Widget;

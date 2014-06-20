@@ -7,9 +7,9 @@
 #include <QMenu>
 #include <QAction>
 #include <QIcon>
-#include "widget.h"
+#include "imagecrop.h"
 #include "trainer.h"
-#include "translation.h"
+#include "translator.h"
 
 class TessStarter : public QObject
 {

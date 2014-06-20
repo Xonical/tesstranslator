@@ -11,7 +11,7 @@ QT       += webkitwidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = MyWidget
+TARGET = TessTranslator
 TEMPLATE = app
 
 
@@ -31,10 +31,9 @@ HEADERS  += \
     trainer.h \
     tessstarter.h \
     imagecrop.h \
-    translatator.h
+    translator.h
 
 FORMS    += \
-    actionform.ui \
     trainer.ui \
     imagecrop.ui \
     translator.ui

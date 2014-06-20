@@ -1,5 +1,5 @@
 #include "bookdelegate.h"
-#include "widget.h"
+#include "imagecrop.h"
 
 #include <QtWidgets>
 
