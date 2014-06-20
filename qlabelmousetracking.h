@@ -12,6 +12,8 @@
 #include<QTextStream>
 #include<QFile>
 #include<QThread>
+#include <QPointer>
+#include "translation.h"
 
 class QLabelMouseTracking : public QLabel
 {
@@ -40,6 +42,7 @@ private:
     int rightBorderX;
     int mousePressedGlobalX;
     int mousePressedGlobalY;
+    Translator *tt;
 
 signals:
     void Mouse_Pressed();

@@ -4,11 +4,19 @@
 #include <QTimer>
 
 
-Widget::Widget(QWidget *parent) :
+
+ImageCrop::ImageCrop(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget)
 {
-ui->setupUi(this);
+    ui->setupUi(this);
+
+    //QDialog *translateDialog = static_cast<QDialog>(parent);
+    //dlgTranslate = qobject_cast<Translator *>(parent);
+
+
+    /**/
+
     ui->lblLeft->setCentralQLabel(ui->lblCenter);
     ui->horizontalLayout->setContentsMargins(0,0,0,0);
 
@@ -33,14 +41,20 @@ ui->setupUi(this);
     this->setGeometry(x,y,width,height);
 
     QTimer::singleShot(1000, this, SLOT(doLater()));
+
 }
 
-Widget::~Widget()
+void ImageCrop::setTranslator(Translator *translator)
+{
+    this->translator = translator;
+}
+
+ImageCrop::~ImageCrop()
 {
     delete ui;
 }
 
-void Widget::doLater()
+void ImageCrop::doLater()
 {
     int x = 0; int y =0; int width = 1280; int height = 1024;
     bool toZoom = true;
@@ -72,7 +86,7 @@ void Widget::doLater()
     this->initActionForm();
 }
 
-void Widget::initActionForm(){
+void ImageCrop::initActionForm(){
     //ActionForm *form = new ActionForm();
     //form->show();
     //form->move(0,0);

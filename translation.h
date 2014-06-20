@@ -27,15 +27,16 @@ namespace Ui {
 class Translation;
 }
 
-class Translation : public QDialog
+class Translator : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit Translation(QWidget *parent = 0);
-    ~Translation();
+    explicit Translator(QWidget *parent = 0);
+    ~Translator();
     void setTextToTranslate(QString source);
-    void setVisible(bool visible);
+    void setTrayIcon(QSystemTrayIcon *trayIcon);
+//    void setVisible(bool visible);
 
 protected:
     void closeEvent(QCloseEvent *event);
@@ -44,8 +45,8 @@ private slots:
     void on_btnShowBrowser_clicked();
     void on_btnDumm_clicked();
     void on_webView_loadFinished(bool arg1);
-    void showMessage();
-        void messageClicked();
+    void showMessage(QString target, QString source);
+    void messageClicked();
 
     void on_btnBallon_clicked();
 
@@ -64,9 +65,11 @@ private:
     QAction *minimizeAction;
     QAction *restoreAction;
     QAction *quitAction;
+    QAction *trainerAction;
     QMenu *trayIconMenu;
         void createActions();
         void createModel();
+
 };
 
 #endif // TRANSLATION_H

@@ -4,22 +4,27 @@
 #include <QWidget>
 #include <QSystemTrayIcon>
 #include <QIcon>
+#include <translation.h>
 
 namespace Ui {
 class Widget;
 }
 
-class Widget : public QWidget
+class ImageCrop : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit Widget(QWidget *parent = 0);
-    ~Widget();
+    explicit ImageCrop(QWidget *parent = 0);
+    Translator *dlgTranslate;
+    void setTranslator(Translator *translator);
+    Translator *translator;
+    ~ImageCrop();
 
 private:
     Ui::Widget *ui;
     void initActionForm();
+
 
 public slots:
     void doLater();

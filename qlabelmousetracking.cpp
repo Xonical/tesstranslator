@@ -13,6 +13,7 @@
 #include <QThread>
 #include <QFile>
 #include "translation.h"
+#include "widget.h"
 
 QLabelMouseTracking::QLabelMouseTracking(QWidget *parent) :
     QLabel(parent)
@@ -234,10 +235,29 @@ QFile file(txtFile);
     qDebug() << "Was steht: " << doc;
     mainWidget->show();
 
-    Translation *tWid = new Translation();
-    tWid->show();
+
+
+
+//     QPointer<Translator> oo = this->tt;
+//     if (oo.isNull()){
+//         this->tt = new Translator();
+//         qDebug() << "ififififif";
+//     }else{
+//         qDebug() << "elseelseelse";
+//     }
+
+//     tt->show();
+
+     //tt->setTextToTranslate(doc);
+
+    // Downcast mainWidget to get the reference of translator
+    ImageCrop *ic  = qobject_cast<ImageCrop *>(mainWidget);
+    ic->translator->setTextToTranslate(doc);
+
+
+
     //https://translate.google.de/#en/de/eaten
-    tWid->setTextToTranslate("https://translate.google.de/#en/de/" +doc);
+    //tWid->setTextToTranslate("https://translate.google.de/#en/de/" +doc);
 
 //http://dict.leo.org/ende/index_de.html#/search=cinema&searchLoc=0&resultOrder=basic&multiwordShowSingle=on
 }

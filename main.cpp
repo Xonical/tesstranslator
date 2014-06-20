@@ -1,11 +1,9 @@
-/*
-
 #include <QApplication>
 
 #ifndef QT_NO_SYSTEMTRAYICON
 
 #include <QMessageBox>
-#include "widget.h"
+#include "tessstarter.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,58 +11,89 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
 
-    if (!QSystemTrayIcon::isSystemTrayAvailable()) {
-        QMessageBox::critical(0, QObject::tr("Systray"),
-                              QObject::tr("I couldn't detect any system tray "
-                                          "on this system."));
-        return 1;
-    }
+//    if (!QSystemTrayIcon::isSystemTrayAvailable()) {
+//        QMessageBox::critical(0, QObject::tr("Systray"),
+//                              QObject::tr("I couldn't detect any system tray "
+//                                          "on this system."));
+//        return 1;
+//    }
 
-    QApplication::setQuitOnLastWindowClosed(false);
+//    QApplication::setQuitOnLastWindowClosed(false);
 
 
-    Widget w;
-    w.show();
+    TessStarter *t = new TessStarter;
+
+    //w.show();
 
     return a.exec();
 }
-*/
 
 
 
-#include <QApplication>
-#ifndef QT_NO_SYSTEMTRAYICON
 
 
-#include <QMessageBox>
+//#include <QApplication>
 
-#include "translation.h"
+//#ifndef QT_NO_SYSTEMTRAYICON
+
+//#include <QMessageBox>
+//#include "widget.h"
+
+//int main(int argc, char *argv[])
+//{
+//    Q_INIT_RESOURCE(systray);
+
+//    QApplication a(argc, argv);
+
+//    if (!QSystemTrayIcon::isSystemTrayAvailable()) {
+//        QMessageBox::critical(0, QObject::tr("Systray"),
+//                              QObject::tr("I couldn't detect any system tray "
+//                                          "on this system."));
+//        return 1;
+//    }
+
+//    QApplication::setQuitOnLastWindowClosed(false);
+
+
+//    Widget w;
+//    w.show();
+
+//    return a.exec();
+//}
 
 
 
-int main(int argc, char *argv[])
-{
+//#include <QApplication>
+//#ifndef QT_NO_SYSTEMTRAYICON
 
-        Q_INIT_RESOURCE(systray);
 
-    QApplication a(argc, argv);
-    a.setStyleSheet("QSplitter::handle { background-color: yellow }");
+//#include <QMessageBox>
 
-    if (!QSystemTrayIcon::isSystemTrayAvailable()) {
-        QMessageBox::critical(0, QObject::tr("Systray"),
-                              QObject::tr("I couldn't detect any system tray "
-                                          "on this system."));
-        return 1;
-    }
+//#include "translation.h"
 
-    QApplication::setQuitOnLastWindowClosed(false);
-    Translation w;
+//int main(int argc, char *argv[])
+//{
 
-    w.show();
-    //w.setUrl("https://translate.google.de/#en/de/eaten");
-    //w.setTextToTranslate("eaten");
-    return a.exec();
-}
+//        Q_INIT_RESOURCE(systray);
+
+//    QApplication a(argc, argv);
+//    a.setStyleSheet("QSplitter::handle { background-color: yellow }");
+
+//    if (!QSystemTrayIcon::isSystemTrayAvailable()) {
+//        QMessageBox::critical(0, QObject::tr("Systray"),
+//                              QObject::tr("I couldn't detect any system tray "
+//                                          "on this system."));
+//        return 1;
+//    }
+
+//    QApplication::setQuitOnLastWindowClosed(false);
+//    Translation w;
+
+//    w.show();
+//    //w.setUrl("https://translate.google.de/#en/de/eaten");
+//    //w.setTextToTranslate("eaten");
+//    return a.exec();
+//}
 
 
 

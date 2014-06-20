@@ -44,9 +44,26 @@ bool BookDelegate::editorEvent(QEvent *event, QAbstractItemModel *model,
 {
     if (index.column() != 4){
 
+
+
         return false; //so that the selection can change
 
     }else{
+
+
+
+        if (event->type() == QEvent::MouseButtonPress) {
+            QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+
+            QVariant originalValue = index.model()->data(index, Qt::DisplayRole);
+            qDebug() <<"Linktyp:  " << originalValue.type() << " steht: " << originalValue;
+        }
+
+
+
+
+
+
         return true;
     }
 }

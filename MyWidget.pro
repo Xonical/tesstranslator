@@ -20,7 +20,9 @@ SOURCES += main.cpp\
     qlabelmousetracking.cpp \
     actionform.cpp \
     translation.cpp \
-    bookdelegate.cpp
+    bookdelegate.cpp \
+    trainer.cpp \
+    tessstarter.cpp
 
 HEADERS  += widget.h \
     myqlabelcenter.h \
@@ -28,11 +30,14 @@ HEADERS  += widget.h \
     myqlabelhandler.h \
     actionform.h \
     translation.h \
-    bookdelegate.h
+    bookdelegate.h \
+    trainer.h \
+    tessstarter.h
 
 FORMS    += widget.ui \
     actionform.ui \
-    translation.ui
+    translation.ui \
+    trainer.ui
 
 RESOURCES += \
     systray.qrc
