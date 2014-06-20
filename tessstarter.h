@@ -22,12 +22,8 @@ signals:
 public slots:
 
 private:
-    void createActions();
-    void createTrayIcon();
-
     QAction *restoreImageCropAction;
     QAction *minimizeImageCropAction;
-
 
     QAction *restoreTranslatorAction;
     QAction *minimizeTranslatorAction;
@@ -38,9 +34,8 @@ private:
     QAction *cropAction;
     QAction *historyAction;
 
-
-        QSystemTrayIcon *trayIcon;
-          QMenu *trayIconMenu;
+    QSystemTrayIcon *trayIcon;
+    QMenu *trayIconMenu;
 
 
 };
