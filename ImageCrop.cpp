@@ -1,6 +1,5 @@
-#include "widget.h"
-#include "ui_widget.h"
-#include "actionform.h"
+#include "imagecrop.h"
+#include "ui_imagecrop.h"
 #include <QTimer>
 
 
@@ -10,12 +9,6 @@ ImageCrop::ImageCrop(QWidget *parent) :
     ui(new Ui::Widget)
 {
     ui->setupUi(this);
-
-    //QDialog *translateDialog = static_cast<QDialog>(parent);
-    //dlgTranslate = qobject_cast<Translator *>(parent);
-
-
-    /**/
 
     ui->lblLeft->setCentralQLabel(ui->lblCenter);
     ui->horizontalLayout->setContentsMargins(0,0,0,0);
@@ -59,41 +52,24 @@ void ImageCrop::doLater()
     int x = 0; int y =0; int width = 1280; int height = 1024;
     bool toZoom = true;
     while(toZoom){
-               if(x < 512){
-                   x++;
-                   qDebug()<<"Finish 1";
-               }
-               if(y < 20){
-                   y++;
-                   qDebug()<<"Finish 2";
-               }
+        if(x < 512){
+            x++;
+        }
+        if(y < 20){
+            y++;
+        }
 
-               if(width > 629){
-                   width--;
-                   qDebug()<<"Finish 3";
-               }
-               if(height > 327){
-                   height--;
-                   qDebug()<<"Finish 4";
-               }
-              this->setGeometry(x,y,width,height);
-               if(x==512 && y == 20 &&
-                  width == 629 && height == 327){
-                   toZoom =false;
-                   qDebug()<<"Finish 5";
-               }
+        if(width > 629){
+            width--;
+        }
+        if(height > 327){
+            height--;
+        }
+        this->setGeometry(x,y,width,height);
+        if(x==512 && y == 20 &&
+                width == 629 && height == 327){
+            toZoom =false;
+        }
     }
-    this->initActionForm();
 }
 
-void ImageCrop::initActionForm(){
-    //ActionForm *form = new ActionForm();
-    //form->show();
-    //form->move(0,0);
-
-//    QSystemTrayIcon *tray = new QSystemTrayIcon(this);
-//    //QIcon *icon = new QIcon("d:/MyQT_Project/app.ico");
-//    QIcon icon =QIcon("d:/MyQT_Project/app.ico");
-//    tray->setIcon(icon);
-//    tray->setVisible(true);
-}

@@ -1,7 +1,7 @@
-#include "translation.h"
+#include "translatator.h"
 #include "ui_translation.h"
 #include "bookdelegate.h"
-#include "widget.h"
+#include "imagecrop.h"
 #include "trainer.h"
 
 Translator::Translator(QWidget *parent) :

@@ -12,8 +12,8 @@
 #include <QDateTime>
 #include <QThread>
 #include <QFile>
-#include "translation.h"
-#include "widget.h"
+#include "translatator.h"
+#include "imagecrop.h"
 
 QLabelMouseTracking::QLabelMouseTracking(QWidget *parent) :
     QLabel(parent)

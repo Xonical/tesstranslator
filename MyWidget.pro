@@ -16,28 +16,28 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        widget.cpp \
     qlabelmousetracking.cpp \
-    actionform.cpp \
-    translation.cpp \
     bookdelegate.cpp \
     trainer.cpp \
-    tessstarter.cpp
+    tessstarter.cpp \
+    imagecrop.cpp \
+    translator.cpp
 
-HEADERS  += widget.h \
+HEADERS  += \
     myqlabelcenter.h \
     qlabelmousetracking.h \
     myqlabelhandler.h \
-    actionform.h \
-    translation.h \
     bookdelegate.h \
     trainer.h \
-    tessstarter.h
+    tessstarter.h \
+    imagecrop.h \
+    translatator.h
 
-FORMS    += widget.ui \
+FORMS    += \
     actionform.ui \
-    translation.ui \
-    trainer.ui
+    trainer.ui \
+    imagecrop.ui \
+    translator.ui
 
 RESOURCES += \
     systray.qrc
