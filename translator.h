@@ -24,7 +24,7 @@
 #include <QDateTime>
 
 namespace Ui {
-class Translation;
+class Translator;
 }
 
 class Translator : public QDialog
@@ -37,6 +37,7 @@ public:
     void setTextToTranslate(QString source);
     void setTrayIcon(QSystemTrayIcon *trayIcon);
 //    void setVisible(bool visible);
+    void setUrlFromButton(QString url);
 
 protected:
     void closeEvent(QCloseEvent *event);
@@ -53,7 +54,7 @@ private slots:
     void on_btnInsert_clicked();
 
 private:
-    Ui::Translation *ui;
+    Ui::Translator *ui;
     QSqlDatabase db;
     bool initDB();
     QSqlRelationalTableModel *model;
@@ -69,6 +70,7 @@ private:
     QMenu *trayIconMenu;
         void createActions();
         void createModel();
+    bool isCalledFromButton;
 
 };
 

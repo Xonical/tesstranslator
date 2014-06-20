@@ -17,21 +17,21 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
     qlabelmousetracking.cpp \
-    bookdelegate.cpp \
     trainer.cpp \
     tessstarter.cpp \
     imagecrop.cpp \
-    translator.cpp
+    translator.cpp \
+    historydelegate.cpp
 
 HEADERS  += \
     myqlabelcenter.h \
     qlabelmousetracking.h \
     myqlabelhandler.h \
-    bookdelegate.h \
     trainer.h \
     tessstarter.h \
     imagecrop.h \
-    translator.h
+    translator.h \
+    historydelegate.h
 
 FORMS    += \
     trainer.ui \

@@ -1,15 +1,15 @@
 #include "translator.h"
 #include "ui_translator.h"
-#include "bookdelegate.h"
+#include "historydelegate.h"
 #include "imagecrop.h"
 #include "trainer.h"
 
 Translator::Translator(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::Translation)
+    ui(new Ui::Translator)
 {
     ui->setupUi(this);
-
+    isCalledFromButton = true;
 
 
     bool isInit = this->initDB();
@@ -77,6 +77,7 @@ Translator::~Translator()
 
 void Translator::setTextToTranslate(QString source)
 {
+    this->isCalledFromButton = false;
     this->source = source;
     QString google = "https://translate.google.de/#en/de/";
     ui->webView->setUrl(QUrl(google + source));
@@ -86,6 +87,12 @@ void Translator::setTrayIcon(QSystemTrayIcon *trayIcon)
 {
     this->trayIcon = trayIcon;
     connect(trayIcon, SIGNAL(messageClicked()), this, SLOT(messageClicked()));
+}
+
+void Translator::setUrlFromButton(QString url)
+{
+    this->isCalledFromButton = true;
+    ui->webView->setUrl(QUrl(url));
 }
 
 //void Translation::setVisible(bool visible)
@@ -206,8 +213,9 @@ void Translator::createModel()
     //        model->setHeaderData(model->fieldIndex("year"), Qt::Horizontal, tr("Year"));
     //        model->setHeaderData(model->fieldIndex("rating"), Qt::Horizontal, tr("Rating"));
 
+
     ui->tableView->setModel(model);
-    ui->tableView->setItemDelegate(new BookDelegate(ui->tableView));
+    ui->tableView->setItemDelegate(new HistoryDelegate(ui->tableView,this));
 
 ui->tableView->setColumnHidden(model->fieldIndex("eng_ger_id"), true);
 
@@ -261,55 +269,16 @@ void Translator::on_btnDumm_clicked()
 
 void Translator::on_webView_loadFinished(bool arg1)
 {
+    if(! isCalledFromButton){
+        QWebElement e = ui->webView->page()
+                ->currentFrame()->findFirstElement("span#result_box");
 
-    QWebElement e = ui->webView->page()
-            //->mainFrame()->findFirstElement("span class=\"gt-card-ttl-txt\" style=\"direction: ltr;\"");
-
-            // Ausgabe :eat
-            //->currentFrame()->findFirstElement("span.gt-card-ttl-txt");
-
-            ->currentFrame()->findFirstElement("span#result_box");
-
-            qDebug() << "e: " << e.toPlainText();
-
-            this->showMessage(e.toPlainText(),this->source);
+        this->showMessage(e.toPlainText(),this->source);
+    }
 
 
-            /*
-            model->setEditStrategy(QSqlTableModel::OnManualSubmit);
-            QSqlRecord record;
-            QSqlField f2("eng", QVariant::String);
-            QSqlField f3("ger", QVariant::String);
-            QSqlField f4("date", QVariant::String);
-            QSqlField f5("link", QVariant::String);
-            f2.setValue(QVariant(this->source));
-            f3.setValue(QVariant(e.toPlainText()));
-
-            QDateTime *dateTime = new QDateTime();
 
 
-            f4.setValue(QVariant(dateTime->currentDateTime().toString()));
-            f5.setValue(QVariant("https://translate.google.com/" + this->source));
-
-            record.append(f2);
-            record.append(f3);
-            record.append(f4);
-            record.append(f5);
-            //model->insertRecord(-1,record);
-            model->insertRecord(-1,record);
-            model->submit();
-            model->setEditStrategy(QSqlTableModel::OnFieldChange);
-*/
-
-
-//            QSqlRecord record;
-//            QSqlField f2("eng", QVariant::String);
-//            QSqlField f3("ger", QVariant::String);
-//            f2.setValue(QVariant(source));
-//            f3.setValue(QVariant(e.toPlainText()));
-//            record.append(f2);
-//            record.append(f3);
-//            model->insertRecord(-1,record);
 
 }
 

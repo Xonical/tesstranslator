@@ -1,5 +1,5 @@
-#ifndef BOOKDELEGATE_H
-#define BOOKDELEGATE_H
+#ifndef HISTORYDELEGATE_H
+#define HISTORYDELEGATE_H
 
 #include <QModelIndex>
 #include <QPixmap>
@@ -7,13 +7,16 @@
 #include <QSqlRelationalDelegate>
 #include<QDebug>
 #include <QPushButton>
+#include<QWebView>
+#include <QUrl>
+#include <translator.h>
 
 QT_FORWARD_DECLARE_CLASS(QPainter)
 
-class BookDelegate : public QSqlRelationalDelegate
+class HistoryDelegate : public QSqlRelationalDelegate
 {
 public:
-    BookDelegate(QObject *parent);
+    HistoryDelegate(QObject *parent, Translator *translator);
 
     void paint(QPainter *painter, const QStyleOptionViewItem &option,
                const QModelIndex &index) const;
@@ -28,6 +31,7 @@ public:
 
 private:
     QPushButton *btn;
+    Translator *translator;
 };
 
 #endif

@@ -1,15 +1,16 @@
-#include "bookdelegate.h"
+#include "historydelegate.h"
 #include "imagecrop.h"
 
 #include <QtWidgets>
 
-BookDelegate::BookDelegate(QObject *parent)
+HistoryDelegate::HistoryDelegate(QObject *parent, Translator *translator)
     //: QSqlRelationalDelegate(parent), star(QPixmap(":images/star.png"))
 : QSqlRelationalDelegate(parent)
 {
+    this->translator = translator;
 }
 
-void BookDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
+void HistoryDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
                            const QModelIndex &index) const
 {
     if (index.column() == 4) {
@@ -30,7 +31,7 @@ void BookDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
     QItemDelegate::paint(painter, option, index);
 }
 
-QSize BookDelegate::sizeHint(const QStyleOptionViewItem &option,
+QSize HistoryDelegate::sizeHint(const QStyleOptionViewItem &option,
                                  const QModelIndex &index) const
 {
 
@@ -38,7 +39,7 @@ QSize BookDelegate::sizeHint(const QStyleOptionViewItem &option,
 
 }
 
-bool BookDelegate::editorEvent(QEvent *event, QAbstractItemModel *model,
+bool HistoryDelegate::editorEvent(QEvent *event, QAbstractItemModel *model,
                                const QStyleOptionViewItem &option,
                                const QModelIndex &index)
 {
@@ -57,6 +58,16 @@ bool BookDelegate::editorEvent(QEvent *event, QAbstractItemModel *model,
 
             QVariant originalValue = index.model()->data(index, Qt::DisplayRole);
             qDebug() <<"Linktyp:  " << originalValue.type() << " steht: " << originalValue;
+
+            qDebug() << "Parent " << this->parent()->metaObject()->className();
+
+//            //QWebView *webView  = qobject_cast<QWebView *>(this->parent());
+//             QTableView *webView  = qobject_cast<QTableView *>(this->parent());
+
+//            qDebug() << "Parent webView "  << webView->parent()->metaObject()->className()
+//             qDebug() << "Parent model "  <<       model->parent()->metaObject()->className();
+           // webView->setUrl(QUrl(originalValue.toString()));
+            this->translator->setUrlFromButton(originalValue.toString());
         }
 
 
