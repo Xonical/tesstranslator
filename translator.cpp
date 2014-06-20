@@ -92,6 +92,10 @@ void Translator::setTrayIcon(QSystemTrayIcon *trayIcon)
 void Translator::setUrlFromButton(QString url)
 {
     this->isCalledFromButton = true;
+    if(ui->btnShowBrowser->text() == ">>"){
+        ui->webView->setVisible(true);
+        ui->btnShowBrowser->setText("<<");
+    }
     ui->webView->setUrl(QUrl(url));
 }
 
@@ -254,13 +258,6 @@ ui->tableView->setColumnHidden(model->fieldIndex("eng_ger_id"), true);
 
 
 
-void Translator::on_btnShowBrowser_clicked()
-{
-    qDebug() << "gg";
-    ui->webView->setVisible(true);
-
-}
-
 void Translator::on_btnDumm_clicked()
 {
     qDebug() << "no gg";
@@ -328,11 +325,6 @@ void Translator::messageClicked()
 }
 
 
-void Translator::on_btnBallon_clicked()
-{
-   // showMessage();
-}
-
 void Translator::on_btnInsert_clicked()
 {
     model->setEditStrategy(QSqlTableModel::OnManualSubmit);
@@ -358,4 +350,15 @@ void Translator::on_btnInsert_clicked()
     model->insertRecord(-1,record);
     model->submitAll();
     model->setEditStrategy(QSqlTableModel::OnFieldChange);
+}
+
+void Translator::on_btnShowBrowser_clicked(bool checked)
+{
+    if(ui->btnShowBrowser->text() == ">>"){
+        ui->webView->setVisible(true);
+        ui->btnShowBrowser->setText("<<");
+    }else{
+        ui->webView->setVisible(false);
+        ui->btnShowBrowser->setText(">>");
+    }
 }

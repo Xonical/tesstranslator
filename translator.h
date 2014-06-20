@@ -43,15 +43,15 @@ protected:
     void closeEvent(QCloseEvent *event);
 
 private slots:
-    void on_btnShowBrowser_clicked();
     void on_btnDumm_clicked();
     void on_webView_loadFinished(bool arg1);
     void showMessage(QString target, QString source);
     void messageClicked();
 
-    void on_btnBallon_clicked();
 
     void on_btnInsert_clicked();
+
+    void on_btnShowBrowser_clicked(bool checked);
 
 private:
     Ui::Translator *ui;
