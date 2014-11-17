@@ -1,4 +1,8 @@
 # C++ objects and libs
+<<<<<<< HEAD
+=======
+
+>>>>>>> bd1ceb7fdae53099d36d4e9fbf09ecc28c6a46e6
 *.slo
 *.lo
 *.o
@@ -8,7 +12,13 @@
 *.so
 *.dll
 *.dylib
+<<<<<<< HEAD
 # Qt-es
+=======
+
+# Qt-es
+
+>>>>>>> bd1ceb7fdae53099d36d4e9fbf09ecc28c6a46e6
 /.qmake.cache
 /.qmake.stash
 *.pro.user
@@ -19,8 +29,19 @@ qrc_*.cpp
 ui_*.h
 Makefile*
 *-build-*
+<<<<<<< HEAD
 # QtCreator
 *.autosave
 #QtCtreator Qml
 *.qmlproject.user
 *.qmlproject.user.*
+=======
+
+# QtCreator
+
+*.autosave
+
+#QtCtreator Qml
+*.qmlproject.user
+*.qmlproject.user.*
+>>>>>>> bd1ceb7fdae53099d36d4e9fbf09ecc28c6a46e6
