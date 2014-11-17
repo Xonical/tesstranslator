@@ -10,6 +10,9 @@ ImageCrop::ImageCrop(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    QIcon icon = QIcon("images/tesstranslator.png");
+    this->setWindowIcon(icon);
+
     ui->lblLeft->setCentralQLabel(ui->lblCenter);
     ui->horizontalLayout->setContentsMargins(0,0,0,0);
 

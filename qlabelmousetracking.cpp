@@ -33,10 +33,15 @@ void QLabelMouseTracking::mouseMoveEvent(QMouseEvent *ev)
         setCursor( Qt::SizeHorCursor );
 
         if (ev->buttons() == Qt::LeftButton ){
-            this->expandToLeft(ev,this);
+            this->expandToLeft(ev);
         }
     }else if(this->objectName() == "lblRight"){
         setCursor( Qt::SizeHorCursor );
+
+        if (ev->buttons() == Qt::LeftButton ){
+            this->expandToRight(ev);
+        }
+
     }else if(this->objectName() == "lblTop"){
         setCursor( Qt::SizeVerCursor );
     }else if(this->objectName() == "lblBottom"){
@@ -47,18 +52,30 @@ void QLabelMouseTracking::mouseMoveEvent(QMouseEvent *ev)
         }
     }else if(this->objectName() == "lblTopLeft"){
         setCursor( Qt::SizeFDiagCursor );
+
+        if (ev->buttons() == Qt::LeftButton ){
+            this->expandToTopLeft(ev);
+        }
     }else if(this->objectName() == "lblTopRight"){
         setCursor( Qt::SizeBDiagCursor );
     }else if(this->objectName() == "lblBottomLeft"){
         setCursor( Qt::SizeBDiagCursor);
+
+        if (ev->buttons() == Qt::LeftButton ){
+            this->expandToBottomLeft(ev);
+        }
     }else if(this->objectName() == "lblBottomRight"){
         setCursor( Qt::SizeFDiagCursor );
+
+        if (ev->buttons() == Qt::LeftButton ){
+            this->expandToBottomRight(ev);
+        }
     }
 
     // To add a hover effect to each border-label
     if (this->objectName() != "lblCenter"){
       //  this->setStyleSheet("background-color: rgba(139, 169, 119, 0.7)");
-this->setStyleSheet("background-color: rgba(022, 46, 111, 0.5)");
+        this->setStyleSheet("background-color: rgba(022, 46, 111, 0.5)");
 
     }
 }
@@ -97,7 +114,7 @@ void QLabelMouseTracking::setCentralQLabel(QLabel *label)
     this->centralQLabel= label;
 }
 
-void QLabelMouseTracking::expandToLeft(QMouseEvent *ev, QLabel *label)
+void QLabelMouseTracking::expandToLeft(QMouseEvent *ev)
 {
     QWidget *mainWidget = this->parentWidget();
 
@@ -119,6 +136,13 @@ void QLabelMouseTracking::expandToLeft(QMouseEvent *ev, QLabel *label)
     }else{
         mainWidget->setGeometry(ev->globalX(),y,newSize,height);
     }
+}
+
+void QLabelMouseTracking::expandToRight(QMouseEvent *ev)
+{
+    QWidget *mainWidget = this->parentWidget();
+    QRect geo = mainWidget->geometry();
+    mainWidget->setGeometry(geo.x(),geo.y(),geo.width()+ ev->x(),geo.height());
 }
 
 void QLabelMouseTracking::moveWidget(QMouseEvent *ev, QLabel *label)
@@ -267,4 +291,59 @@ void QLabelMouseTracking::expandToBottom(QMouseEvent *ev)
     QWidget *mainWidget = this->parentWidget();
     QRect geo = mainWidget->geometry();
     mainWidget->setGeometry(geo.x(),geo.y(),geo.width(),geo.height() + ev->y());
+}
+
+void QLabelMouseTracking::expandToBottomRight(QMouseEvent *ev)
+{
+    QWidget *mainWidget = this->parentWidget();
+    QRect geo = mainWidget->geometry();
+    mainWidget->setGeometry(geo.x(),geo.y(),geo.width() + ev->x(),geo.height() + ev->y());
+}
+
+void QLabelMouseTracking::expandToTopLeft(QMouseEvent *ev)
+{
+    QWidget *mainWidget = this->parentWidget();
+
+    int newWeight = 0;
+    //Wird negiert, da nach Bewegung außerhalb negative Werte auslößt
+    int toGrowToRight = (ev->x()*-1);
+    int newX = ev->globalX();
+    int newSize = mainWidget->width() + toGrowToRight;
+
+    int y = mainWidget->geometry().y();
+    int height = mainWidget->geometry().height();
+
+    if (this->rightBorderX == newSize){
+         mainWidget->setGeometry(newX,y,newSize,height);
+    }
+
+    if(newSize < 20){
+         newSize = 20; // Minimum Width of the widget
+    }else{
+       // mainWidget->setGeometry(ev->globalX(),y-ev->globalY(),newSize,height);
+    }
+}
+
+void QLabelMouseTracking::expandToBottomLeft(QMouseEvent *ev)
+{
+    QWidget *mainWidget = this->parentWidget();
+
+    int newWeight = 0;
+    //Wird negiert, da nach Bewegung außerhalb negative Werte auslößt
+    int toGrowToRight = (ev->x()*-1);
+    int newX = ev->globalX();
+    int newSize = mainWidget->width() + toGrowToRight;
+
+    int y = mainWidget->geometry().y();
+    int height = mainWidget->geometry().height();
+
+    if (this->rightBorderX == newSize){
+         mainWidget->setGeometry(newX,y,newSize,height);
+    }
+
+    if(newSize < 20){
+         newSize = 20; // Minimum Width of the widget
+    }else{
+        mainWidget->setGeometry(ev->globalX(),y,newSize,height+ev->y());
+    }
 }

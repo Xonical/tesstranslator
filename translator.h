@@ -22,6 +22,7 @@
 #include <QCloseEvent>
 #include <QDate>
 #include <QDateTime>
+#include <QStringList>
 
 namespace Ui {
 class Translator;
@@ -43,15 +44,9 @@ protected:
     void closeEvent(QCloseEvent *event);
 
 private slots:
-    void on_btnDumm_clicked();
     void on_webView_loadFinished(bool arg1);
     void showMessage(QString target, QString source);
     void messageClicked();
-
-
-    void on_btnInsert_clicked();
-
-    void on_btnShowBrowser_clicked(bool checked);
 
 private:
     Ui::Translator *ui;
@@ -68,9 +63,10 @@ private:
     QAction *quitAction;
     QAction *trainerAction;
     QMenu *trayIconMenu;
-        void createActions();
-        void createModel();
+    void createActions();
+    void createModel();
     bool isCalledFromButton;
+    void handleGeometry();
 
 };
 

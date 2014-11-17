@@ -20,9 +20,8 @@ void HistoryDelegate::paint(QPainter *painter, const QStyleOptionViewItem &optio
                    sf.rect=option.rect;
                    sf.features=QStyleOptionButton::None;
                    const QAbstractItemModel *model = index.model();
-                   //Hole Feld "link" aus db
-                   //QString str = model->data(index, Qt::DisplayRole).toString();
-                   sf.text=("Foo");
+                   sf.text=("go to");
+
                    sf.state=QStyle::State_Enabled|QStyle::State_Raised;
                    QApplication::style()->drawControl(QStyle::CE_PushButton,&sf,painter);
                    QApplication::style()->drawControl(QStyle::CE_PushButton,&sf,painter);

@@ -9,12 +9,11 @@ TessStarter::TessStarter(QObject *parent) :
     ImageCrop *w = new ImageCrop();
     w->show();
 
-    minimizeImageCropAction = new QAction(tr("Mi&nimize Crapper"), w);
+    minimizeImageCropAction = new QAction(tr("Mi&nimiere Cropper"), w);
     connect(minimizeImageCropAction, SIGNAL(triggered()), w, SLOT(hide()));
 
-    restoreImageCropAction = new QAction(tr("Restore Crapper"), w);
+    restoreImageCropAction = new QAction(tr("Zeige Cropper"), w);
     connect(restoreImageCropAction, SIGNAL(triggered()), w, SLOT(showNormal()));
-
 
     // ----------------------------------------------
     Translator *translator = new Translator();
@@ -45,7 +44,7 @@ TessStarter::TessStarter(QObject *parent) :
 
 
     trayIcon->setVisible(true);
-    QIcon icon = QIcon("D:/MyQT_Project/TessTranslator/images/heart.png");
+    QIcon icon = QIcon("d:/tesstranslator.png");
     trayIcon->setIcon(icon);
     translator->setWindowIcon(icon);
 

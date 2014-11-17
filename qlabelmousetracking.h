@@ -25,10 +25,14 @@ public:
     void leaveEvent(QEvent *ev);
     void mouseDoubleClickEvent(QMouseEvent *ev);
     void setCentralQLabel(QLabel *label);
-    void expandToLeft(QMouseEvent *ev, QLabel *label);
+    void expandToLeft(QMouseEvent *ev);
+    void expandToRight(QMouseEvent *ev);
     void moveWidget(QMouseEvent *ev,QLabel *label);
     void createCropedScreenshot(QMouseEvent *ev);
     void expandToBottom( QMouseEvent *ev);
+    void expandToBottomRight(QMouseEvent *ev);
+    void expandToTopLeft(QMouseEvent *ev);
+    void expandToBottomLeft(QMouseEvent *ev);
 
 
     int x,y;

@@ -9,47 +9,20 @@ Translator::Translator(QWidget *parent) :
     ui(new Ui::Translator)
 {
     ui->setupUi(this);
-    isCalledFromButton = true;
-
 
     bool isInit = this->initDB();
     if(isInit){
         this->createModel();
-
-
-
-
-        //        connect(ui.bookTable->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
-        //                mapper, SLOT(setCurrentModelIndex(QModelIndex)));
-        //        ui.bookTable->setCurrentIndex(model->index(0, 0));
     }
 
     QNetworkProxy proxy;
     //proxy.setType(QNetworkProxy::DefaultProxy);
     //proxy.setType(QNetworkProxy::Socks5Proxy);
     //proxy.setType(QNetworkProxy::HttpProxy);
-    //proxy.setHostName("alfaproxy");
+    //proxy.setHostName("-------");
     //proxy.setPort(3128);
 
-
-    //proxy.setType(QNetworkProxy::Socks5Proxy);
-    proxy.setType(QNetworkProxy::HttpProxy);
-    proxy.setHostName("alfaproxy");
-    proxy.setPort(3128);
-
     QNetworkProxy::setApplicationProxy(proxy);
-
-
-//    createActions();
-
-
-//    createTrayIcon();
-
-
-//    connect(trayIcon, SIGNAL(messageClicked()), this, SLOT(messageClicked()));
-//    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
-//            this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
-
 
     QRect rect = ui->tableView->geometry();
     ui->tableView->setGeometry(rect.x(),rect.y(),777,rect.height());
@@ -60,14 +33,6 @@ Translator::Translator(QWidget *parent) :
 
     this->setGeometry(geoWebView.x()+555,geoWebView.y() +44,geoThis.x()-geoWebView.x(),
                       geoThis.height());
- /*                     */
-
-    //ui->webView->setUrl(QUrl("https://translate.google.de/#en/de/"));
-    //this->setTextToTranslate("eat");
-     //this->hide();
-
-//    Widget *w = new Widget(this);
-//    w->show();
 }
 
 Translator::~Translator()
@@ -92,32 +57,19 @@ void Translator::setTrayIcon(QSystemTrayIcon *trayIcon)
 void Translator::setUrlFromButton(QString url)
 {
     this->isCalledFromButton = true;
-    if(ui->btnShowBrowser->text() == ">>"){
-        ui->webView->setVisible(true);
-        ui->btnShowBrowser->setText("<<");
-    }
     ui->webView->setUrl(QUrl(url));
 }
 
-//void Translation::setVisible(bool visible)
-//{
-//    qDebug() << "fooo123";
-//    minimizeAction->setEnabled(visible);
-//    restoreAction->setEnabled(isMaximized() || !visible);
-//    QDialog::setVisible(visible);
-//}
-
 void Translator::closeEvent(QCloseEvent *event)
 {
-   // if (trayIcon->isVisible()) {
-        hide();
-        event->ignore();
-    //}
+    hide();
+    event->ignore();
 }
 
 bool Translator::initDB()
 {
-    QString dbPath = "d:/MyQT_Project/tesstranslator.db";
+    // FYI: Use valid path
+    QString dbPath = "tesstranslator.db";
 
     if(QFileInfo(dbPath).isFile()){
 
@@ -156,7 +108,7 @@ void Translator::createTrayIcon()
     trayIcon->setContextMenu(trayIconMenu);
 
     trayIcon->setVisible(true);
-    QIcon icon = QIcon("D:/MyQT_Project/TessTranslator/images/heart.png");
+    QIcon icon = QIcon("qrc:/images/images/tesstranslator.png");
     trayIcon->setIcon(icon);
     setWindowIcon(icon);
 
@@ -166,7 +118,6 @@ void Translator::createTrayIcon()
 void Translator::createActions()
 {
     Trainer *trainer = new Trainer(this);
-
 
     trainerAction = new QAction(tr("&Trainer"), this);
     connect(trainerAction, SIGNAL(triggered()), trainer, SLOT(exec()));
@@ -197,72 +148,13 @@ void Translator::createModel()
                               model->lastError().text());
     }
 
-
-
-
-
-
-    // Remember the indexes of the columns
-    //authorIdx = model->fieldIndex("author");
-    //genreIdx = model->fieldIndex("genre");
-
-    // Set the relations to the other database tables
-    //model->setRelation(authorIdx, QSqlRelation("authors", "id", "name"));
-    //model->setRelation(genreIdx, QSqlRelation("genres", "id", "name"));
-
-    // Set the localized header captions
-    //model->setHeaderData(authorIdx, Qt::Horizontal, tr("Author Name"));
-    //model->setHeaderData(genreIdx, Qt::Horizontal, tr("Genre"));
-    //        model->setHeaderData(model->fieldIndex("title"), Qt::Horizontal, tr("Title"));
-    //        model->setHeaderData(model->fieldIndex("year"), Qt::Horizontal, tr("Year"));
-    //        model->setHeaderData(model->fieldIndex("rating"), Qt::Horizontal, tr("Rating"));
-
-
     ui->tableView->setModel(model);
     ui->tableView->setItemDelegate(new HistoryDelegate(ui->tableView,this));
 
-ui->tableView->setColumnHidden(model->fieldIndex("eng_ger_id"), true);
-
+    ui->tableView->setColumnHidden(model->fieldIndex("eng_ger_id"), true);
 }
 
 
-
-//void Translation::on_webView_loadFinished(bool arg1)
-//{
-//    if(arg1){
-
-//        QWebElement e = ui->webView->page()
-//                //->mainFrame()->findFirstElement("span class=\"gt-card-ttl-txt\" style=\"direction: ltr;\"");
-
-//                // Ausgabe :eat
-//                //->currentFrame()->findFirstElement("span.gt-card-ttl-txt");
-
-//                ->currentFrame()->findFirstElement("span#result_box");
-
-//                qDebug() << "e: " << e.toPlainText();
-
-
-
-
-//                QSqlRecord record;
-//                QSqlField f2("eng", QVariant::String);
-//                QSqlField f3("ger", QVariant::String);
-//                f2.setValue(QVariant(source));
-//                f3.setValue(QVariant(e.toPlainText()));
-//                record.append(f2);
-//                record.append(f3);
-//                model->insertRecord(-1,record);
-//    }
-//}
-
-
-
-
-void Translator::on_btnDumm_clicked()
-{
-    qDebug() << "no gg";
-        ui->webView->setVisible(false);
-}
 
 void Translator::on_webView_loadFinished(bool arg1)
 {
@@ -272,20 +164,15 @@ void Translator::on_webView_loadFinished(bool arg1)
 
         this->showMessage(e.toPlainText(),this->source);
     }
-
-
-
-
-
 }
 
 void Translator::showMessage(QString target, QString source)
 {
-    QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::MessageIcon(0);
+    model->setEditStrategy(QSqlTableModel::OnManualSubmit);
+
 
     QString txt = source + " - " + target;
     qDebug() << "TXT_ " << txt;
-    this->trayIcon->showMessage(txt,"",icon,15 *1000);
 
 
     QSqlRecord record;
@@ -298,67 +185,21 @@ void Translator::showMessage(QString target, QString source)
 
     QDateTime *dateTime = new QDateTime();
 
-
-    f4.setValue(QVariant(dateTime->currentDateTime().toString()));
+    f4.setValue(QVariant(dateTime->currentDateTime().time().toString()));
     f5.setValue(QVariant("https://translate.google.de/#en/de/" + this->source));
 
     record.append(f2);
     record.append(f3);
     record.append(f4);
     record.append(f5);
-    //model->insertRecord(-1,record);
     model->insertRecord(-1,record);
-    model->submit();
+    qDebug() << "Erfolgreich? " << model->submitAll();
     model->setEditStrategy(QSqlTableModel::OnFieldChange);
-
-
-
- }
+    QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::MessageIcon(0);
+    this->trayIcon->showMessage(txt,"",icon,15 *1000);
+}
 
 void Translator::messageClicked()
 {
-//    QMessageBox::information(0, tr("Systray"),
-//                             tr("Sorry, I already gave what help I could.\n"
-//                                "Maybe you should try asking a human?"));
-    qDebug() << "Damn show ";
     this->show();
-}
-
-
-void Translator::on_btnInsert_clicked()
-{
-    model->setEditStrategy(QSqlTableModel::OnManualSubmit);
-    QSqlRecord record;
-    QSqlField f2("eng", QVariant::String);
-    QSqlField f3("ger", QVariant::String);
-    QSqlField f4("date", QVariant::String);
-    QSqlField f5("link", QVariant::String);
-    f2.setValue(QVariant("awesome"));
-    f3.setValue(QVariant("genial"));
-
-    QDateTime *dateTime = new QDateTime();
-
-
-    f4.setValue(QVariant(dateTime->currentDateTime().toString()));
-    f5.setValue(QVariant("http://www.google.de"));
-
-    record.append(f2);
-    record.append(f3);
-    record.append(f4);
-    record.append(f5);
-    //model->insertRecord(-1,record);
-    model->insertRecord(-1,record);
-    model->submitAll();
-    model->setEditStrategy(QSqlTableModel::OnFieldChange);
-}
-
-void Translator::on_btnShowBrowser_clicked(bool checked)
-{
-    if(ui->btnShowBrowser->text() == ">>"){
-        ui->webView->setVisible(true);
-        ui->btnShowBrowser->setText("<<");
-    }else{
-        ui->webView->setVisible(false);
-        ui->btnShowBrowser->setText(">>");
-    }
 }
