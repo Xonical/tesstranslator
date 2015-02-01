@@ -21,7 +21,10 @@ SOURCES += main.cpp\
     tessstarter.cpp \
     imagecrop.cpp \
     translator.cpp \
-    historydelegate.cpp
+    historydelegate.cpp \
+    mainwindow.cpp \
+    languagehelper.cpp \
+    databasebuilder.cpp
 
 HEADERS  += \
     myqlabelcenter.h \
@@ -31,12 +34,16 @@ HEADERS  += \
     tessstarter.h \
     imagecrop.h \
     translator.h \
-    historydelegate.h
+    historydelegate.h \
+    mainwindow.h \
+    languagehelper.h \
+    databasebuilder.h
 
 FORMS    += \
     trainer.ui \
     imagecrop.ui \
-    translator.ui
+    translator.ui \
+    mainwindow.ui
 
 RESOURCES += \
     systray.qrc
