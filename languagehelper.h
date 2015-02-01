@@ -8,13 +8,6 @@ class LanguageHelper : public QObject
     Q_OBJECT
 public:
     explicit LanguageHelper(QObject *parent = 0);
-
-    enum Languages
-    {
-       English,
-       German
-    };
-
     ~LanguageHelper();
 
 signals:

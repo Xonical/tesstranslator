@@ -36,6 +36,8 @@ private:
 
     QSystemTrayIcon *trayIcon;
     QMenu *trayIconMenu;
+
+
 };
 
 #endif // TESSSTARTER_H
