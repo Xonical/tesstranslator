@@ -2,13 +2,25 @@
 #define DATABASECREATOR_H
 
 #include <QObject>
+#include <QtSql>
+#include <QDir>
+#include <QDebug>
+#include <QStringList>
 
-class databasecreator : public QObject
+class DatabaseBuilder : public QObject
 {
     Q_OBJECT
 public:
-    explicit databasecreator(QObject *parent = 0);
-    ~databasecreator();
+    explicit DatabaseBuilder(QObject *parent = 0);
+    QString getDatabasePathName();
+    deleteDatabaseFile();
+    createDatabase();
+    ~DatabaseBuilder();
+private:
+        QSqlDatabase db;
+        QString databasePathName;
+
+
 
 signals:
 
